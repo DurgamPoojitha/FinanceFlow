@@ -74,8 +74,13 @@ export const WidgetsPanel = () => {
                                 </div>
                             </div>
 
-                            <div className="mt-8 relative z-10">
-                                <p className="text-white/90 font-mono tracking-[0.2em] text-lg sm:text-base">{card.number.match(/.{1,4}/g)?.join(' ') || card.number}</p>
+                            <div className="mt-8 relative z-10 w-full pr-8">
+                                <div className="flex w-full justify-between text-white/95 font-mono tracking-widest text-lg sm:text-base">
+                                    <span>{card.number.substring(0, 4) || '••••'}</span>
+                                    <span>{card.number.substring(4, 8) || '••••'}</span>
+                                    <span>{card.number.substring(8, 12) || '••••'}</span>
+                                    <span>{card.number.substring(12, 16) || '••••'}</span>
+                                </div>
                             </div>
 
                             <div className="mt-5 flex justify-between items-center relative z-10 w-full">
