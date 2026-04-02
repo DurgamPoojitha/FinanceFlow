@@ -19,28 +19,20 @@ export const BalanceTrendChart = () => {
             if (t.type === 'Expense') grouped[d].expense += Number(t.amount);
         });
 
-        if (sorted.length === 0) return [];
-
-        const firstDate = new Date(sorted[0].date);
-        const lastDate = new Date(); // Or sorted[sorted.length - 1].date if we don't want to extend to today
-
-        // Let's use the last transaction date or today
-        const maxDate = new Date(sorted[sorted.length - 1].date) > lastDate ? new Date(sorted[sorted.length - 1].date) : lastDate;
-
-        let curr = new Date(firstDate);
-        curr.setHours(0, 0, 0, 0);
-        maxDate.setHours(0, 0, 0, 0);
-
-        while (curr <= maxDate) {
-            const dStr = curr.toISOString().split('T')[0];
-            const label = curr.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-            dataPoints.push({
-                date: label,
-                Income: grouped[dStr] ? grouped[dStr].income : 0,
-                Expense: grouped[dStr] ? grouped[dStr].expense : 0,
+        Object.keys(grouped)
+            .sort((a, b) => new Date(a) - new Date(b))
+            .forEach(date => {
+                const d = new Date(date);
+                // Fix timezone parsing consistency by splitting
+                const [year, month, day] = date.split('-');
+                const localDate = new Date(year, month - 1, day);
+                const label = localDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                dataPoints.push({
+                    date: label,
+                    Income: grouped[date].income,
+                    Expense: grouped[date].expense,
+                });
             });
-            curr.setDate(curr.getDate() + 1);
-        }
 
         return dataPoints;
     }, [transactions]);
@@ -61,7 +53,7 @@ export const BalanceTrendChart = () => {
                 <div className="flex-1 w-full h-full text-sm mt-2">
                     <ResponsiveContainer width="100%" height="100%">
                         <BarChart data={data} margin={{ top: 20, right: 10, left: -20, bottom: 0 }}>
-                            <XAxis dataKey="date" axisLine={false} tickLine={false} tick={{ fill: isDark ? '#64748b' : '#94a3b8', fontSize: 12 }} dy={10} minTickGap={30} />
+                            <XAxis dataKey="date" axisLine={false} tickLine={false} tick={{ fill: isDark ? '#64748b' : '#94a3b8', fontSize: 12 }} dy={10} />
                             <YAxis axisLine={false} tickLine={false} tick={{ fill: isDark ? '#64748b' : '#94a3b8', fontSize: 12 }} tickFormatter={(value) => `$${value}`} />
                             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={isDark ? "rgba(255,255,255,0.05)" : "#f1f5f9"} />
                             <Tooltip
