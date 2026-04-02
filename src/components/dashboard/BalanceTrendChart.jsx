@@ -13,21 +13,34 @@ export const BalanceTrendChart = () => {
 
         const grouped = {};
         sorted.forEach(t => {
-            const d = t.date;
+            const d = new Date(t.date).toISOString().split('T')[0];
             if (!grouped[d]) grouped[d] = { income: 0, expense: 0 };
             if (t.type === 'Income') grouped[d].income += Number(t.amount);
             if (t.type === 'Expense') grouped[d].expense += Number(t.amount);
         });
 
-        Object.keys(grouped).forEach(date => {
-            const d = new Date(date);
-            const label = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        if (sorted.length === 0) return [];
+
+        const firstDate = new Date(sorted[0].date);
+        const lastDate = new Date(); // Or sorted[sorted.length - 1].date if we don't want to extend to today
+
+        // Let's use the last transaction date or today
+        const maxDate = new Date(sorted[sorted.length - 1].date) > lastDate ? new Date(sorted[sorted.length - 1].date) : lastDate;
+
+        let curr = new Date(firstDate);
+        curr.setHours(0, 0, 0, 0);
+        maxDate.setHours(0, 0, 0, 0);
+
+        while (curr <= maxDate) {
+            const dStr = curr.toISOString().split('T')[0];
+            const label = curr.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
             dataPoints.push({
                 date: label,
-                Income: grouped[date].income,
-                Expense: grouped[date].expense,
+                Income: grouped[dStr] ? grouped[dStr].income : 0,
+                Expense: grouped[dStr] ? grouped[dStr].expense : 0,
             });
-        });
+            curr.setDate(curr.getDate() + 1);
+        }
 
         return dataPoints;
     }, [transactions]);
@@ -48,7 +61,7 @@ export const BalanceTrendChart = () => {
                 <div className="flex-1 w-full h-full text-sm mt-2">
                     <ResponsiveContainer width="100%" height="100%">
                         <LineChart data={data} margin={{ top: 20, right: 10, left: -20, bottom: 0 }}>
-                            <XAxis dataKey="date" axisLine={false} tickLine={false} tick={{ fill: isDark ? '#64748b' : '#94a3b8', fontSize: 12 }} dy={10} />
+                            <XAxis dataKey="date" axisLine={false} tickLine={false} tick={{ fill: isDark ? '#64748b' : '#94a3b8', fontSize: 12 }} dy={10} minTickGap={30} />
                             <YAxis axisLine={false} tickLine={false} tick={{ fill: isDark ? '#64748b' : '#94a3b8', fontSize: 12 }} tickFormatter={(value) => `$${value}`} />
                             <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={isDark ? "rgba(255,255,255,0.05)" : "#f1f5f9"} />
                             <Tooltip
