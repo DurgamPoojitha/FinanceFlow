@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, useContext } from 'react';
+import React, { createContext, useState, useEffect, useContext, useMemo } from 'react';
 import { mockApi } from '../api/mockApi';
 
 const FinanceContext = createContext();
@@ -14,6 +14,7 @@ export const FinanceProvider = ({ children }) => {
         search: '',
         type: 'All',
         category: 'All',
+        dateRange: 'This Month'
     });
 
     useEffect(() => {
@@ -77,12 +78,40 @@ export const FinanceProvider = ({ children }) => {
     };
 
     // derived state
-    const totalIncome = transactions.filter(t => t.type === 'Income').reduce((sum, t) => sum + Number(t.amount), 0);
-    const totalExpense = transactions.filter(t => t.type === 'Expense').reduce((sum, t) => sum + Number(t.amount), 0);
+    const dateFilteredTransactions = useMemo(() => {
+        return transactions.filter(t => {
+            if (!filters.dateRange || filters.dateRange === 'All Time') return true;
+
+            const txDate = new Date(t.date);
+            const now = new Date();
+            txDate.setHours(0, 0, 0, 0);
+
+            if (filters.dateRange === 'Last 7 days') {
+                const sevenDaysAgo = new Date();
+                sevenDaysAgo.setDate(now.getDate() - 7);
+                sevenDaysAgo.setHours(0, 0, 0, 0);
+                return txDate >= sevenDaysAgo && txDate <= now;
+            }
+            if (filters.dateRange === 'Last 30 days') {
+                const thirtyDaysAgo = new Date();
+                thirtyDaysAgo.setDate(now.getDate() - 30);
+                thirtyDaysAgo.setHours(0, 0, 0, 0);
+                return txDate >= thirtyDaysAgo && txDate <= now;
+            }
+            if (filters.dateRange === 'This Month') {
+                return txDate.getMonth() === now.getMonth() && txDate.getFullYear() === now.getFullYear();
+            }
+            return true;
+        });
+    }, [transactions, filters.dateRange]);
+
+    const totalIncome = dateFilteredTransactions.filter(t => t.type === 'Income').reduce((sum, t) => sum + Number(t.amount), 0);
+    const totalExpense = dateFilteredTransactions.filter(t => t.type === 'Expense').reduce((sum, t) => sum + Number(t.amount), 0);
     const totalBalance = totalIncome - totalExpense;
 
     const value = {
-        transactions,
+        transactions: dateFilteredTransactions,
+        allTransactions: transactions,
         isLoading,
         role,
         setRole,
