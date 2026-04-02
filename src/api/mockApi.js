@@ -1,6 +1,6 @@
 import { initialTransactions } from '../data/mockData';
 
-const STORAGE_KEY = 'finance_transactions_v2';
+const STORAGE_KEY = 'finance_transactions_v3';
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
