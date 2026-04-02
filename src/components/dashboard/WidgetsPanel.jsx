@@ -3,9 +3,7 @@ import { Plus, ChevronRight, Monitor, Laptop, CreditCard, X, Target } from 'luci
 import { motion, AnimatePresence } from 'framer-motion';
 
 export const WidgetsPanel = () => {
-    const [cards, setCards] = useState([
-        { id: 1, number: '5095 7474 1103 7513', expiry: '11/28', bank: 'Default Bank' }
-    ]);
+    const [cards, setCards] = useState([]);
 
     const [goals, setGoals] = useState([
         { id: 1, title: 'New iMac', currentAmount: 1000, targetAmount: 2000, icon: 'Monitor' },
