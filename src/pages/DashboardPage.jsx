@@ -4,6 +4,7 @@ import { BalanceTrendChart } from '../components/dashboard/BalanceTrendChart';
 import { SpendingBreakdownChart } from '../components/dashboard/SpendingBreakdownChart';
 import { InsightsSection } from '../components/dashboard/InsightsSection';
 import { DateFilter } from '../components/dashboard/DateFilter';
+import { WidgetsPanel } from '../components/dashboard/WidgetsPanel';
 import { TransactionForm } from '../components/transactions/TransactionForm';
 import { useFinance } from '../context/FinanceContext';
 import { Plus } from 'lucide-react';
@@ -43,19 +44,25 @@ export const DashboardPage = () => {
                 </div>
             </div>
 
-            <SummaryCards />
+            <div className="grid grid-cols-1 xl:grid-cols-4 gap-6">
+                <div className="xl:col-span-3 space-y-6">
+                    <SummaryCards />
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div className="lg:col-span-2">
-                    <BalanceTrendChart />
-                </div>
-                <div className="lg:col-span-1">
-                    <SpendingBreakdownChart />
-                </div>
-            </div>
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div className="lg:col-span-2">
+                            <BalanceTrendChart />
+                        </div>
+                        <div className="lg:col-span-1">
+                            <SpendingBreakdownChart />
+                        </div>
+                    </div>
 
-            <div className="mt-6">
-                <InsightsSection />
+                    <InsightsSection />
+                </div>
+
+                <div className="xl:col-span-1">
+                    <WidgetsPanel />
+                </div>
             </div>
 
             {isFormOpen && (
