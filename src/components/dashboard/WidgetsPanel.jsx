@@ -1,14 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Plus, ChevronRight, Monitor, Laptop, CreditCard, X, Target } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export const WidgetsPanel = () => {
-    const [cards, setCards] = useState([]);
+    const [cards, setCards] = useState(() => {
+        const savedCards = localStorage.getItem('finance_cards');
+        return savedCards ? JSON.parse(savedCards) : [];
+    });
 
-    const [goals, setGoals] = useState([
-        { id: 1, title: 'New iMac', currentAmount: 1000, targetAmount: 2000, icon: 'Monitor' },
-        { id: 2, title: "New Macbook '14", currentAmount: 1200, targetAmount: 2000, icon: 'Laptop' }
-    ]);
+    const [goals, setGoals] = useState(() => {
+        const savedGoals = localStorage.getItem('finance_goals');
+        return savedGoals ? JSON.parse(savedGoals) : [
+            { id: 1, title: 'New iMac', currentAmount: 1000, targetAmount: 2000, icon: 'Monitor' },
+            { id: 2, title: "New Macbook '14", currentAmount: 1200, targetAmount: 2000, icon: 'Laptop' }
+        ];
+    });
+
+    useEffect(() => {
+        localStorage.setItem('finance_cards', JSON.stringify(cards));
+    }, [cards]);
+
+    useEffect(() => {
+        localStorage.setItem('finance_goals', JSON.stringify(goals));
+    }, [goals]);
 
     const [showCardModal, setShowCardModal] = useState(false);
     const [cardForm, setCardForm] = useState({ number: '', expiry: '', bank: '' });
