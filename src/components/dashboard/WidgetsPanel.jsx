@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, ChevronRight, Monitor, Laptop, CreditCard, X, Target } from 'lucide-react';
+import { Plus, ChevronRight, Monitor, Laptop, CreditCard, X, Target, Trash2, Edit2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export const WidgetsPanel = () => {
@@ -25,16 +25,40 @@ export const WidgetsPanel = () => {
     }, [goals]);
 
     const [showCardModal, setShowCardModal] = useState(false);
-    const [cardForm, setCardForm] = useState({ number: '', expiry: '', bank: '' });
+    const [cardForm, setCardForm] = useState({ id: null, number: '', expiry: '', bank: '' });
 
     const [showGoalModal, setShowGoalModal] = useState(false);
     const [goalForm, setGoalForm] = useState({ title: '', targetAmount: '', currentAmount: '' });
 
+    const openNewCardModal = () => {
+        setCardForm({ id: null, number: '', expiry: '', bank: '' });
+        setShowCardModal(true);
+    };
+
     const handleAddCard = (e) => {
         e.preventDefault();
-        setCards([...cards, { ...cardForm, id: Date.now() }]);
+        if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(cardForm.expiry)) {
+            alert('Invalid expiry date. Please use valid MM/YY format.');
+            return;
+        }
+        if (cardForm.id) {
+            setCards(cards.map(c => c.id === cardForm.id ? cardForm : c));
+        } else {
+            setCards([...cards, { ...cardForm, id: Date.now() }]);
+        }
         setShowCardModal(false);
-        setCardForm({ number: '', expiry: '', bank: '' });
+        setCardForm({ id: null, number: '', expiry: '', bank: '' });
+    };
+
+    const handleEditCard = (card) => {
+        setCardForm(card);
+        setShowCardModal(true);
+    };
+
+    const handleDeleteCard = (id) => {
+        if (window.confirm("Are you sure you want to delete this card?")) {
+            setCards(cards.filter(c => c.id !== id));
+        }
     };
 
     const handleAddGoal = (e) => {
@@ -62,7 +86,7 @@ export const WidgetsPanel = () => {
                 <div className="flex justify-between items-center mb-4">
                     <h3 className="text-[17px] font-bold text-slate-800 dark:text-white tracking-wide">My Card</h3>
                     <button
-                        onClick={() => setShowCardModal(true)}
+                        onClick={openNewCardModal}
                         className="bg-slate-900 dark:bg-white/10 text-white dark:text-slate-200 text-xs font-semibold px-4 py-2 rounded-lg hover:bg-slate-800 transition-colors"
                     >
                         Add Card
@@ -103,9 +127,14 @@ export const WidgetsPanel = () => {
                                 <p className="text-sm font-semibold tracking-wider">{card.expiry}</p>
                             </div>
 
-                            {/* Faux button on right edge */}
-                            <div className="absolute right-2 top-1/2 -translate-y-1/2 w-6 h-6 bg-white rounded-full flex items-center justify-center shadow-md cursor-pointer z-10">
-                                <ChevronRight className="w-4 h-4 text-slate-800" />
+                            {/* Action buttons on right edge */}
+                            <div className="absolute right-2 top-3 flex flex-col space-y-2 z-10 transition-opacity">
+                                <button onClick={() => handleEditCard(card)} title="Edit Card" className="w-7 h-7 bg-black/20 hover:bg-black/40 backdrop-blur-md rounded-full flex items-center justify-center shadow-sm cursor-pointer transition-colors border border-white/10">
+                                    <Edit2 className="w-3.5 h-3.5 text-white" />
+                                </button>
+                                <button onClick={() => handleDeleteCard(card.id)} title="Delete Card" className="w-7 h-7 bg-rose-500/80 hover:bg-rose-600 backdrop-blur-md rounded-full flex items-center justify-center shadow-sm cursor-pointer transition-colors border border-white/10">
+                                    <Trash2 className="w-3.5 h-3.5 text-white" />
+                                </button>
                             </div>
                         </div>
                     ))}
@@ -171,7 +200,7 @@ export const WidgetsPanel = () => {
                             className="bg-white dark:bg-[#131B2B] rounded-3xl shadow-2xl p-6 w-full max-w-sm border border-slate-100 dark:border-white/10"
                         >
                             <div className="flex justify-between items-center mb-6">
-                                <h3 className="text-lg font-bold text-slate-800 dark:text-white">Add New Card</h3>
+                                <h3 className="text-lg font-bold text-slate-800 dark:text-white">{cardForm.id ? "Edit Card" : "Add New Card"}</h3>
                                 <button onClick={() => setShowCardModal(false)} className="text-slate-400 hover:text-slate-600"><X className="w-5 h-5" /></button>
                             </div>
                             <form onSubmit={handleAddCard} className="space-y-4">
@@ -185,9 +214,9 @@ export const WidgetsPanel = () => {
                                 </div>
                                 <div>
                                     <label className="block text-xs font-semibold text-slate-500 mb-1">Expiry Date</label>
-                                    <input required type="text" maxLength={5} value={cardForm.expiry} onChange={e => setCardForm({ ...cardForm, expiry: e.target.value })} className="w-full bg-slate-50 dark:bg-[#0B1120] border border-slate-200 dark:border-white/10 rounded-xl px-4 py-2.5 text-sm text-slate-800 dark:text-white outline-none focus:border-indigo-500" placeholder="MM/YY" />
+                                    <input required type="text" pattern="^(0[1-9]|1[0-2])\/\d{2}$" title="Must be MM/YY (e.g., 12/25)" maxLength={5} value={cardForm.expiry} onChange={e => setCardForm({ ...cardForm, expiry: e.target.value.replace(/[^\d/]/g, '') })} className="w-full bg-slate-50 dark:bg-[#0B1120] border border-slate-200 dark:border-white/10 rounded-xl px-4 py-2.5 text-sm text-slate-800 dark:text-white outline-none focus:border-indigo-500" placeholder="MM/YY" />
                                 </div>
-                                <button type="submit" className="w-full mt-2 bg-indigo-600 text-white font-semibold py-3 rounded-xl hover:bg-indigo-700 transition-colors">Save Card</button>
+                                <button type="submit" className="w-full mt-2 bg-indigo-600 text-white font-semibold py-3 rounded-xl hover:bg-indigo-700 transition-colors">{cardForm.id ? "Update Card" : "Save Card"}</button>
                             </form>
                         </motion.div>
                     </div>
