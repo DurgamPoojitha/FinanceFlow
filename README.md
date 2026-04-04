@@ -24,11 +24,11 @@ Make sure that you are using Node.js (v18+ is recommended). This project include
 
 ## 🏗️ Overview of Approach
 
-The architecture and design philosophy of FinanceFlow was heavily guided by modern front-end best practices:
-- **Design Process**: Utilized a mobile-first, highly responsive design strategy using Tailwind CSS v4. This guarantees the dashboard scales seamlessly from smartphones (via the bottom MobileNav) to complex desktop panels. Aesthetic polish prioritized diffused shadows, glassmorphism elements, and smooth interactions via Framer Motion.
-- **State Management**: Bypassed heavy external global state libraries like Redux in favor of React's native Context API (`FinanceContext.jsx`). This approach centralizes the algorithmic heavy lifting (total aggregations, date filtering) and cleanly serves pre-calculated data downstream to visual components, ensuring High Cohesion and Low Coupling.
-- **Component Architecture**: Segmented the visual interface into distinct modular chunks (Layout, Transactions, Dashboard Widgets). Each module strictly adheres to its own responsibilities, providing maximum reusability.
-- **Mock-to-Prod Readiness**: Constructed a scalable local mock Database interface (`mockApi.js`) simulating async HTTP fetch promises. This fundamentally forces the frontend architecture to expect real-world Loading and Resolver states, making it instantly ready to connect to a live backend API without structural rewrites.
+FinanceFlow architectural design and philosophy was strongly influenced by the best practices of today's front-end:
+- **Design Process**: Mobile-first and highly responsive design approach with Tailwind CSS v4. This ensures the smooth transition of the dashboard between smartphones (through the bottom MobileNav) to sophisticated desktop displays. Aesthetic polish was focused on diffused shadows, glassmorphism core and smooth interactions through Framer Motion.
+- **State Management**: Replaced large external global state libraries such as Redux with the native Context API of React (`FinanceContext.jsx). This is a centralized manner of algorithmic heavy lifting (total aggregations, date filtering) and making available pre-calculated information downstream to visual elements.
+- **Component Architecture**: Decomposed the visual interface into individual modular units (Layout, Transactions, Dashboard Widgets). The modules are highly reusable since each has its own responsibility.
+- **Mock-to-Prod Readiness**: Built a scalable local mock Database interface (`mockApi.js`) that mimics the behavior of async HTTP fetch promises. This essentially compels the frontend architecture to anticipate actual Loading and Resolver conditions and it immediately becomes capable of accessing a live backend API without structural modifications.
 
 ---
 
@@ -66,7 +66,7 @@ The nature and functionality of FinanceFlow is designed to replicate exactly how
 
 ---
 
-🛠️ Code Quality: Unit Testing and Documentation.
+## 🛠️ Code Quality: Unit Testing and Documentation.
 
 It is no use having a beautiful dashboard when the math and data behind it are likely to have silent errors.
 
