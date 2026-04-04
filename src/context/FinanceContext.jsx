@@ -2,7 +2,7 @@ import React, { createContext, useState, useEffect, useContext, useMemo } from '
 import { mockApi } from '../api/mockApi';
 
 // Create our context to serve as the global state hub for all finance data.
-const FinanceContext = createContext();
+export const FinanceContext = createContext();
 
 // A handy custom hook to grab finance data from anywhere without manually importing the Context!
 export const useFinance = () => useContext(FinanceContext);
