@@ -97,6 +97,6 @@ Although FinanceFlow manages to create a wonderful big picture in personal finan
 
 ## 🔒 A Note on Contextual Permissions
 
-In FinanceFlow, **Transactions** function as the global, overarching financial ledger for an organization or family budget. Because of this, only users equipped with an `Admin` role can inject, edit, or delete these global ledger entries to maintain financial integrity. 
+The FinanceFlow has Transactions, which serve as the overall, high-level financial record of an organization or a family budget. Due to this, only users who are assigned an `Admin role are in a position to inject, edit, or delete such global ledger entries in order to ensure financial integrity. 
 
-However, **Cards** and **Goals** represent localized, personalized tracking milestones for the specific individual viewing the dashboard. Because these operate as private visual widgets stored securely in the user's local cache directly on their device, both `Admin` and `Viewer` accounts possess full autonomy to add, edit, and orchestrate their own personal goals and card trackers!
+But, both of the elements, such as Cards and Goals are local and personalized tracking milestones to the individual viewing the dashboard. Since these are independent visual control elements that are stored safely in the local cache of the user on their own device, both the Admin account and the Viewer account have complete freedom to create, modify, and arrange their personal objectives and card trackers! 
