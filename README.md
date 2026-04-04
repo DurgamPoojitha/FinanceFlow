@@ -92,3 +92,11 @@ Although FinanceFlow manages to create a wonderful big picture in personal finan
 2. **True Backend Connection**: Making the React Context wrappers link to a Node.js/PostgreSQL database rather than the local mock database to allow actual multi-device internet syncing.
 3. **Plaid/Bank API Syncing**: Secure connection of the application to third-party Plaid API modules. FinanceFlow would automatically retrieve transactions with Chase or Bank of America real-world accounts hourly rather than manually entering them. 
 4. **Predictive AI Insights**: Forecasting shortfalls in the future based on 6 months of user spending characteristics with the help of linear regression or basic ML prediction models right on top of my recharts.
+
+---
+
+## 🔒 A Note on Contextual Permissions
+
+In FinanceFlow, **Transactions** function as the global, overarching financial ledger for an organization or family budget. Because of this, only users equipped with an `Admin` role can inject, edit, or delete these global ledger entries to maintain financial integrity. 
+
+However, **Cards** and **Goals** represent localized, personalized tracking milestones for the specific individual viewing the dashboard. Because these operate as private visual widgets stored securely in the user's local cache directly on their device, both `Admin` and `Viewer` accounts possess full autonomy to add, edit, and orchestrate their own personal goals and card trackers!
