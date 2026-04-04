@@ -6,7 +6,7 @@ export const Header = () => {
     const { role, setRole, handleResetData, theme, toggleTheme } = useFinance();
 
     return (
-        <header className="h-[72px] bg-white/80 dark:bg-[#0B1120]/80 backdrop-blur-xl border-b border-gray-200 dark:border-white/[0.04] flex items-center justify-between px-8 z-10 sticky top-0 supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-[#0B1120]/60 transition-colors duration-300">
+        <header className="h-[72px] bg-white/85 dark:bg-[#0B1120]/80 backdrop-blur-xl border-b border-slate-200/90 dark:border-white/[0.04] flex items-center justify-between px-8 z-10 sticky top-0 supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-[#0B1120]/60 transition-colors duration-300 shadow-sm shadow-slate-200/30 dark:shadow-none">
             <div className="flex items-center">
                 <h1 className="text-lg font-semibold text-gray-800 dark:text-slate-200 hidden sm:block tracking-wide">Overview</h1>
             </div>
@@ -32,8 +32,8 @@ export const Header = () => {
                     <button
                         onClick={() => setRole('Viewer')}
                         className={`flex items-center px-3 py-1.5 text-[13px] font-semibold rounded-lg transition-all duration-300 ${role === 'Viewer'
-                                ? 'bg-white dark:bg-[#1E293B] text-gray-800 dark:text-white shadow-sm ring-1 ring-gray-200/50 dark:ring-white/10'
-                                : 'text-gray-500 dark:text-slate-500 hover:text-gray-700 dark:hover:text-slate-300'
+                            ? 'bg-white dark:bg-[#1E293B] text-gray-800 dark:text-white shadow-sm ring-1 ring-gray-200/50 dark:ring-white/10'
+                            : 'text-gray-500 dark:text-slate-500 hover:text-gray-700 dark:hover:text-slate-300'
                             }`}
                     >
                         <Shield className="h-3.5 w-3.5 sm:mr-1.5" />
@@ -42,8 +42,8 @@ export const Header = () => {
                     <button
                         onClick={() => setRole('Admin')}
                         className={`flex items-center px-3 py-1.5 text-[13px] font-semibold rounded-lg transition-all duration-300 ${role === 'Admin'
-                                ? 'bg-rose-50 dark:bg-rose-500/10 text-rose-600 dark:text-rose-400 shadow-[inset_0_0_10px_rgba(244,63,94,0.1)] ring-1 ring-rose-200 dark:ring-rose-500/30'
-                                : 'text-gray-500 dark:text-slate-500 hover:text-gray-700 dark:hover:text-slate-300'
+                            ? 'bg-rose-50 dark:bg-rose-500/10 text-rose-600 dark:text-rose-400 shadow-[inset_0_0_10px_rgba(244,63,94,0.1)] ring-1 ring-rose-200 dark:ring-rose-500/30'
+                            : 'text-gray-500 dark:text-slate-500 hover:text-gray-700 dark:hover:text-slate-300'
                             }`}
                     >
                         <ShieldAlert className="h-3.5 w-3.5 sm:mr-1.5" />

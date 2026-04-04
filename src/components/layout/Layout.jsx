@@ -1,6 +1,7 @@
 import React from 'react';
 import { Sidebar } from './Sidebar';
 import { Header } from './Header';
+import { MobileNav } from './MobileNav';
 import { useFinance } from '../../context/FinanceContext';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -34,6 +35,7 @@ export const Layout = ({ children, activeTab, setActiveTab }) => {
                         </AnimatePresence>
                     )}
                 </main>
+                <MobileNav activeTab={activeTab} setActiveTab={setActiveTab} />
             </div>
         </div>
     );

@@ -20,9 +20,9 @@ export const TransactionList = ({ transactions, onEdit }) => {
             <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="bg-white dark:bg-[#131B2B] rounded-[18px] border border-slate-100 dark:border-white/[0.04] p-16 text-center shadow-sm"
+                className="bg-white dark:bg-[#131B2B] rounded-[18px] border border-slate-200/80 dark:border-white/[0.04] p-16 text-center shadow-[0_4px_24px_-8px_rgba(0,0,0,0.06)]"
             >
-                <div className="w-20 h-20 bg-slate-50 dark:bg-[#0B1120] border border-slate-100 dark:border-white/[0.05] rounded-[20px] flex items-center justify-center mx-auto mb-5 rotate-3">
+                <div className="w-20 h-20 bg-slate-50 dark:bg-[#0B1120] border border-slate-200/60 dark:border-white/[0.05] rounded-[20px] flex items-center justify-center mx-auto mb-5 rotate-3">
                     <SearchX className="h-8 w-8 text-slate-300 dark:text-slate-500" />
                 </div>
                 <h3 className="text-xl font-bold text-slate-800 dark:text-white tracking-wide">No transactions found</h3>
@@ -39,9 +39,9 @@ export const TransactionList = ({ transactions, onEdit }) => {
                     initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: idx * 0.1, duration: 0.4 }}
-                    className="bg-white dark:bg-[#131B2B] rounded-[18px] shadow-sm dark:shadow-[0_4px_24px_-8px_rgba(0,0,0,0.5)] border border-slate-100 dark:border-white/[0.04] overflow-hidden transition-colors duration-300"
+                    className="bg-white dark:bg-[#131B2B] rounded-[18px] shadow-[0_4px_24px_-8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_24px_-8px_rgba(0,0,0,0.5)] border border-slate-200/80 dark:border-white/[0.04] overflow-hidden transition-colors duration-300"
                 >
-                    <div className="px-6 py-4 bg-slate-50/80 dark:bg-[#0B1120]/30 border-b border-slate-100 dark:border-white/[0.04] flex items-center justify-between transition-colors duration-300">
+                    <div className="px-6 py-4 bg-slate-50/80 dark:bg-[#0B1120]/30 border-b border-slate-200/80 dark:border-white/[0.04] flex items-center justify-between transition-colors duration-300">
                         <h4 className="text-[13px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">{month}</h4>
                         <span className="text-[11px] font-semibold text-slate-600 dark:text-slate-500 bg-white dark:bg-[#1E293B] px-2 py-1 rounded-md border border-slate-200 dark:border-white/[0.05] shadow-sm dark:shadow-none">{txs.length} transactions</span>
                     </div>

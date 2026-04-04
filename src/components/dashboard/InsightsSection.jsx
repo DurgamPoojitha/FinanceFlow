@@ -86,7 +86,7 @@ export const InsightsSection = () => {
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.4 + (idx * 0.1), duration: 0.5, ease: "easeOut" }}
                     key={idx}
-                    className="bg-white dark:bg-[#0f1423] rounded-[18px] p-6 flex flex-row items-center border border-gray-100 dark:border-white/[0.03] transition-all hover:bg-gray-50 dark:hover:bg-[#131b2d] cursor-default shadow-sm dark:shadow-none"
+                    className="bg-white dark:bg-[#0f1423] rounded-[18px] p-6 flex flex-row items-center border border-slate-200/80 dark:border-white/[0.03] transition-all hover:bg-slate-50 dark:hover:bg-[#131b2d] cursor-default shadow-[0_4px_20px_-8px_rgba(0,0,0,0.05)] dark:shadow-none"
                 >
                     <div className={`${item.iconBg} ${item.iconColor} h-[42px] w-[42px] rounded-2xl flex items-center justify-center shrink-0 mr-5 transition-transform duration-300 hover:scale-105`}>
                         <item.icon className="h-[22px] w-[22px]" />

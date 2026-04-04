@@ -14,7 +14,7 @@ export const SummaryCards = () => {
             bgStyle: 'bg-white dark:bg-gradient-to-br dark:from-[#1E293B] dark:to-[#0F172A]',
             iconBase: 'bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400',
             text: 'text-slate-900 dark:text-white',
-            border: 'border-slate-100 dark:border-white/[0.04]',
+            border: 'border-slate-200/80 dark:border-white/[0.04]',
             subtext: 'text-slate-500 hover:text-slate-200'
         },
         {
@@ -24,7 +24,7 @@ export const SummaryCards = () => {
             bgStyle: 'bg-white dark:bg-[#131B2B]',
             iconBase: 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400',
             text: 'text-slate-800 dark:text-slate-100',
-            border: 'border-slate-100 dark:border-white/[0.04]',
+            border: 'border-slate-200/80 dark:border-white/[0.04]',
             subtext: 'text-slate-500'
         },
         {
@@ -34,7 +34,7 @@ export const SummaryCards = () => {
             bgStyle: 'bg-white dark:bg-[#131B2B]',
             iconBase: 'bg-rose-50 dark:bg-rose-500/10 text-rose-600 dark:text-rose-400',
             text: 'text-slate-800 dark:text-slate-100',
-            border: 'border-slate-100 dark:border-white/[0.04]',
+            border: 'border-slate-200/80 dark:border-white/[0.04]',
             subtext: 'text-slate-500'
         }
     ];
@@ -47,7 +47,7 @@ export const SummaryCards = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
                     key={index}
-                    className={`${card.bgStyle} rounded-3xl p-7 relative overflow-hidden transition-all duration-300 shadow-sm hover:shadow-xl border ${card.border} hover:border-slate-200 dark:hover:border-white/[0.08]`}
+                    className={`${card.bgStyle} rounded-3xl p-7 relative overflow-hidden transition-all duration-300 shadow-[0_4px_24px_-8px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_32px_-8px_rgba(0,0,0,0.08)] dark:shadow-none border ${card.border} hover:border-slate-300 dark:hover:border-white/[0.08]`}
                 >
                     <div className="flex justify-between items-start mb-6 relative z-10 transition-colors duration-300">
                         <div className={`h-12 w-12 rounded-[18px] flex items-center justify-center ${card.iconBase} transition-colors duration-300`}>

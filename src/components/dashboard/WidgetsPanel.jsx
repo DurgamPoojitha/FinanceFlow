@@ -142,7 +142,7 @@ export const WidgetsPanel = () => {
             </div>
 
             {/* My Goals Section */}
-            <div className="flex flex-col bg-white dark:bg-[#131B2B] rounded-[1.25rem] shadow-sm dark:shadow-[0_4px_24px_-8px_rgba(0,0,0,0.5)] border border-slate-100 dark:border-white/[0.04] p-5">
+            <div className="flex flex-col bg-white dark:bg-[#131B2B] rounded-[1.25rem] shadow-[0_4px_24px_-8px_rgba(0,0,0,0.06)] dark:shadow-[0_4px_24px_-8px_rgba(0,0,0,0.5)] border border-slate-200/80 dark:border-white/[0.04] p-5">
                 <div className="flex justify-between items-center mb-5">
                     <h3 className="text-[16px] font-bold text-slate-800 dark:text-white tracking-wide">My Goals</h3>
                     <button
@@ -162,7 +162,7 @@ export const WidgetsPanel = () => {
                         const activeText = textColors[index % textColors.length];
 
                         return (
-                            <div key={goal.id} className="bg-slate-50 dark:bg-[#0B1120] p-4 rounded-2xl border border-slate-100 dark:border-white/5">
+                            <div key={goal.id} className="bg-slate-50 dark:bg-[#0B1120] p-4 rounded-2xl border border-slate-200/60 dark:border-white/5">
                                 <div className="flex items-center justify-between mb-3">
                                     <div className="flex items-center space-x-3">
                                         <div className="p-2 bg-white dark:bg-white/5 shadow-sm text-slate-600 dark:text-slate-300 rounded-lg">
