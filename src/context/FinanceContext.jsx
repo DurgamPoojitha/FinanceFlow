@@ -1,15 +1,24 @@
 import React, { createContext, useState, useEffect, useContext, useMemo } from 'react';
 import { mockApi } from '../api/mockApi';
 
+// Create our context to serve as the global state hub for all finance data.
 const FinanceContext = createContext();
 
+// A handy custom hook to grab finance data from anywhere without manually importing the Context!
 export const useFinance = () => useContext(FinanceContext);
 
 export const FinanceProvider = ({ children }) => {
+    // We're setting up our primary state variables here.
     const [transactions, setTransactions] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+
+    // Controlling user authorization via this local state.
     const [role, setRole] = useState('Viewer'); // Viewer | Admin
+
+    // Theme preference logic - we check if there's a saved theme in the browser first.
     const [theme, setTheme] = useState(() => localStorage.getItem('finance_theme') || 'dark');
+
+    // An object tracking what filters are currently active on our transactions list.
     const [filters, setFilters] = useState({
         search: '',
         type: 'All',
@@ -17,6 +26,7 @@ export const FinanceProvider = ({ children }) => {
         dateRange: 'This Month'
     });
 
+    // On the first load, grab data asynchronously to simulate a real database fetch.
     useEffect(() => {
         const fetchInitialData = async () => {
             setIsLoading(true);
@@ -32,6 +42,8 @@ export const FinanceProvider = ({ children }) => {
         fetchInitialData();
     }, []);
 
+    // Whenever the theme changes, we sync it not just to local storage, but also to the HTML class 
+    // so Tailwind can smoothly trigger dark/light modes.
     useEffect(() => {
         localStorage.setItem('finance_theme', theme);
         if (theme === 'dark') {
@@ -43,6 +55,8 @@ export const FinanceProvider = ({ children }) => {
 
     const toggleTheme = () => setTheme(prev => prev === 'dark' ? 'light' : 'dark');
 
+    // CRUD functions for our transactions. These talk to our mock API 
+    // and seamlessly update our local React state immediately on success!
     const addTransaction = async (transaction) => {
         try {
             const newTx = await mockApi.addTransaction(transaction);
@@ -70,6 +84,7 @@ export const FinanceProvider = ({ children }) => {
         }
     };
 
+    // Sometimes we just need to start clean—this simulates a hard sync with standard mock data.
     const handleResetData = async () => {
         setIsLoading(true);
         const data = await mockApi.resetData();
@@ -77,14 +92,15 @@ export const FinanceProvider = ({ children }) => {
         setIsLoading(false);
     };
 
-    // derived state
+    // Derived State: Automatically memoize the result of applying the active date filter.
+    // This saves React a lot of unnecessary crunching if the transactions haven't changed!
     const dateFilteredTransactions = useMemo(() => {
         return transactions.filter(t => {
             if (!filters.dateRange || filters.dateRange === 'All Time') return true;
 
             const txDate = new Date(t.date);
             const now = new Date();
-            txDate.setHours(0, 0, 0, 0);
+            txDate.setHours(0, 0, 0, 0); // Strip out time so we only compare the calendar day
 
             if (filters.dateRange === 'Last 7 days') {
                 const sevenDaysAgo = new Date();
@@ -105,10 +121,12 @@ export const FinanceProvider = ({ children }) => {
         });
     }, [transactions, filters.dateRange]);
 
+    // Compute our quick high-level ledger totals.
     const totalIncome = dateFilteredTransactions.filter(t => t.type === 'Income').reduce((sum, t) => sum + Number(t.amount), 0);
     const totalExpense = dateFilteredTransactions.filter(t => t.type === 'Expense').reduce((sum, t) => sum + Number(t.amount), 0);
     const totalBalance = totalIncome - totalExpense;
 
+    // Bundle everything up nicely into a payload
     const value = {
         transactions: dateFilteredTransactions,
         allTransactions: transactions,
@@ -128,6 +146,7 @@ export const FinanceProvider = ({ children }) => {
         totalBalance,
     };
 
+    // Wrapping our entire application tree in the Provider so any child can dip in
     return (
         <FinanceContext.Provider value={value}>
             {children}

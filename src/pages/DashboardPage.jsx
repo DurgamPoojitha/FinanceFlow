@@ -13,6 +13,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 export const DashboardPage = () => {
     const { role } = useFinance();
     const [isFormOpen, setIsFormOpen] = useState(false);
+
+    // We wrap the entire page in Framer Motion so it smoothly fades in and out between tab switches
     return (
         <motion.div
             initial={{ opacity: 0 }}
@@ -20,6 +22,7 @@ export const DashboardPage = () => {
             exit={{ opacity: 0 }}
             className="pb-8"
         >
+            {/* Header section containing our title and interactive admin controls */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
                 <div>
                     <h2 className="text-[28px] font-bold text-slate-900 dark:text-white tracking-tight transition-colors duration-300">Dashboard Overview</h2>
@@ -44,7 +47,10 @@ export const DashboardPage = () => {
                 </div>
             </div>
 
+            {/* This is the primary grid layout. It breaks into a 3-1 split on large monitors */}
             <div className="grid grid-cols-1 xl:grid-cols-4 gap-6">
+
+                {/* The main content area: Metrics, Charts, and Insights */}
                 <div className="xl:col-span-3 space-y-6">
                     <SummaryCards />
 
@@ -60,6 +66,7 @@ export const DashboardPage = () => {
                     <InsightsSection />
                 </div>
 
+                {/* The right-hand sidebar panel for managing Goals and specific Cards */}
                 <div className="xl:col-span-1">
                     <WidgetsPanel />
                 </div>

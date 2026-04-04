@@ -1,3 +1,6 @@
+// 🌟 BalanceTrendChart Component
+// This is a UI component constructed with Tailwind and Framer Motion.
+// It ensures our interface stays crisp, responsive, and neatly organized.
 import React, { useMemo, useState } from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { useFinance } from '../../context/FinanceContext';

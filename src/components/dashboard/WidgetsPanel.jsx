@@ -1,3 +1,6 @@
+// 🌟 WidgetsPanel Component
+// This is a UI component constructed with Tailwind and Framer Motion.
+// It ensures our interface stays crisp, responsive, and neatly organized.
 import React, { useState, useEffect } from 'react';
 import { Plus, ChevronRight, Monitor, Laptop, CreditCard, X, Target, Trash2, Edit2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';

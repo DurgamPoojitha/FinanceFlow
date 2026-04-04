@@ -12,12 +12,17 @@ export const TransactionsPage = () => {
     const [editingTransaction, setEditingTransaction] = useState(null);
     const [sortConfig, setSortConfig] = useState({ key: 'date', direction: 'desc' });
 
+    // We process our raw context transactions here before passing them down to the list.
+    // This allows us to sort, search, and filter efficiently without hitting the global store heavily.
     const processedTransactions = useMemo(() => {
         return transactions
             .filter(t => {
+                // Free-text search logic across description or category matching
                 if (filters.search && !t.description?.toLowerCase().includes(filters.search.toLowerCase()) && !t.category.toLowerCase().includes(filters.search.toLowerCase())) {
                     return false;
                 }
+
+                // Dropdown filter logic matches
                 if (filters.type !== 'All' && t.type !== filters.type) {
                     return false;
                 }

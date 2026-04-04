@@ -1,3 +1,6 @@
+// 🌟 MobileNav Component
+// This is a UI component constructed with Tailwind and Framer Motion.
+// It ensures our interface stays crisp, responsive, and neatly organized.
 import React from 'react';
 import { LayoutDashboard, Receipt } from 'lucide-react';
 import { motion } from 'framer-motion';

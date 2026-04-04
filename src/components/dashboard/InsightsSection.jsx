@@ -1,3 +1,6 @@
+// 🌟 InsightsSection Component
+// This is a UI component constructed with Tailwind and Framer Motion.
+// It ensures our interface stays crisp, responsive, and neatly organized.
 import React, { useMemo } from 'react';
 import { useFinance } from '../../context/FinanceContext';
 import { motion } from 'framer-motion';
