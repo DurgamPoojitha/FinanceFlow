@@ -94,7 +94,7 @@ export const BalanceTrendChart = () => {
                                 formatter={(value) => [<span className="font-bold">${value}</span>, activeTab]}
                             />
                             <Area
-                                type="natural"
+                                type="monotone"
                                 dataKey={activeTab}
                                 stroke={activeTab === 'Expense' ? '#f43f5e' : "#60a5fa"}
                                 strokeWidth={2.5}
