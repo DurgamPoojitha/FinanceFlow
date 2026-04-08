@@ -1,10 +1,18 @@
 import React, { createContext, useState, useEffect, useContext, useMemo } from 'react';
 import { mockApi } from '../api/mockApi';
 
-// Create our context to serve as the global state hub for all finance data.
+/**
+ * This Context is basically our global brain for the app.
+ * Instead of adding something heavy like Redux, we just use React Context
+ * to easily share our transactions, theme, and filters across any component that needs it.
+ */
 export const FinanceContext = createContext();
 
-// A handy custom hook to grab finance data from anywhere without manually importing the Context!
+/**
+ * A tiny custom hook so we don't have to keep importing `useContext`
+ * and `FinanceContext` every single time we want to show a balance.
+ * We just call `useFinance()` and boom, we have all our data!
+ */
 export const useFinance = () => useContext(FinanceContext);
 
 export const FinanceProvider = ({ children }) => {
@@ -42,8 +50,12 @@ export const FinanceProvider = ({ children }) => {
         fetchInitialData();
     }, []);
 
-    // Whenever the theme changes, we sync it not just to local storage, but also to the HTML class 
-    // so Tailwind can smoothly trigger dark/light modes.
+    /**
+     * Whenever the user toggles dark mode, we don't just save it to local storage.
+     * We actually slap a 'dark' class right onto the root HTML element.
+     * This makes Tailwind immediately flip all its colors across the entire app,
+     * so the transition feels instant.
+     */
     useEffect(() => {
         localStorage.setItem('finance_theme', theme);
         if (theme === 'dark') {
@@ -92,15 +104,20 @@ export const FinanceProvider = ({ children }) => {
         setIsLoading(false);
     };
 
-    // Derived State: Automatically memoize the result of applying the active date filter.
-    // This saves React a lot of unnecessary crunching if the transactions haven't changed!
+    /**
+     * This is a cool optimization trick. Filtering transactions by dates (this month, last 7 days)
+     * requires some heavy date math. By wrapping it in `useMemo`, we tell React:
+     * "Hey, only recalculate this list IF the transactions change or the filter changes."
+     * If someone just clicks a theme toggle, we don't need to rebuild this list. Saves a lot of lag!
+     */
     const dateFilteredTransactions = useMemo(() => {
         return transactions.filter(t => {
             if (!filters.dateRange || filters.dateRange === 'All Time') return true;
 
             const txDate = new Date(t.date);
             const now = new Date();
-            txDate.setHours(0, 0, 0, 0); // Strip out time so we only compare the calendar day
+            // Normalizing times to midnight (00:00) so calendar delta comparisons strictly execute on calendar days.
+            txDate.setHours(0, 0, 0, 0);
 
             if (filters.dateRange === 'Last 7 days') {
                 const sevenDaysAgo = new Date();

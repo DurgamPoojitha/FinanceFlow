@@ -1,6 +1,8 @@
-// 🌟 InsightsSection Component
-// This is a UI component constructed with Tailwind and Framer Motion.
-// It ensures our interface stays crisp, responsive, and neatly organized.
+/**
+ * This section crunches the numbers to give you some quick "at a glance" stats.
+ * We figure out your biggest spending category and your average transaction cost,
+ * and we wrapped the math in `useMemo` so it doesn't recalculate unless your transactions change.
+ */
 import React, { useMemo } from 'react';
 import { useFinance } from '../../context/FinanceContext';
 import { motion } from 'framer-motion';

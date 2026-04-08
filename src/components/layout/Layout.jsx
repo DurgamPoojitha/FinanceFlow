@@ -1,6 +1,8 @@
-// 🌟 Layout Component
-// This is a UI component constructed with Tailwind and Framer Motion.
-// It ensures our interface stays crisp, responsive, and neatly organized.
+/**
+ * The wrapper that holds the entire app together.
+ * It sticks the Sidebar on the left (for desktop), the Header on top, 
+ * and drops our active page nicely into the scrolling middle workspace!
+ */
 import React from 'react';
 import { Sidebar } from './Sidebar';
 import { Header } from './Header';
@@ -11,7 +13,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 // This is the core structural spine of our app. It handles bringing in 
 // the Sidebar, Header, MobileNav, and injecting the active page's view seamlessly.
 export const Layout = ({ children, activeTab, setActiveTab }) => {
-    // We grab isLoading from context so we can paint a beautiful loader when fetching data.
+    // We grab isLoading from our global context so we can show a nice spinner if data is fetching.
     const { isLoading } = useFinance();
 
     return (

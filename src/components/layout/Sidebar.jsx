@@ -1,6 +1,8 @@
-// 🌟 Sidebar Component
-// This is a UI component constructed with Tailwind and Framer Motion.
-// It ensures our interface stays crisp, responsive, and neatly organized.
+/**
+ * The desktop navigation menu that sits fixed to the left side of the screen.
+ * We hide it on mobile because it takes up too much room, but on big screens
+ * it gives you plenty of space for branding and switching pages.
+ */
 import React from 'react';
 import { LayoutDashboard, Receipt, Wallet, Sparkles } from 'lucide-react';
 
@@ -24,8 +26,8 @@ export const Sidebar = ({ activeTab, setActiveTab }) => {
                         key={item.id}
                         onClick={() => setActiveTab(item.id)}
                         className={`w-full flex items-center px-4 py-3 rounded-xl transition-all duration-300 font-medium ${activeTab === item.id
-                                ? 'bg-indigo-50 dark:bg-indigo-500/10 text-indigo-700 dark:text-indigo-400 shadow-sm dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] border border-indigo-100 dark:border-indigo-500/20'
-                                : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-white/[0.02] hover:text-slate-900 dark:hover:text-slate-200 border border-transparent'
+                            ? 'bg-indigo-50 dark:bg-indigo-500/10 text-indigo-700 dark:text-indigo-400 shadow-sm dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] border border-indigo-100 dark:border-indigo-500/20'
+                            : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-white/[0.02] hover:text-slate-900 dark:hover:text-slate-200 border border-transparent'
                             }`}
                     >
                         <item.icon className={`h-5 w-5 mr-3.5 transition-colors ${activeTab === item.id ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-400 dark:text-slate-500 group-hover:text-slate-500 dark:group-hover:text-slate-400'}`} />

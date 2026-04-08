@@ -1,6 +1,8 @@
-// 🌟 TransactionForm Component
-// This is a UI component constructed with Tailwind and Framer Motion.
-// It ensures our interface stays crisp, responsive, and neatly organized.
+/**
+ * The popup form where users actually punch in new incomes or expenses.
+ * We pass an `editingTransaction` prop if we're tweaking an old, existing transaction,
+ * or leave it null if we want to create a brand new one from scratch.
+ */
 import React, { useState } from 'react';
 import { useFinance } from '../../context/FinanceContext';
 import { X, Save, PlusCircle } from 'lucide-react';

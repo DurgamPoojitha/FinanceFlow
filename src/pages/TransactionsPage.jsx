@@ -1,3 +1,8 @@
+/**
+ * The Transactions page where users can search, sort, and filter their history.
+ * We do all the sorting and filtering right here using `useMemo` so it's super fast
+ * and doesn't constantly bug the global context.
+ */
 import React, { useState, useMemo } from 'react';
 import { useFinance } from '../context/FinanceContext';
 import { TransactionList } from '../components/transactions/TransactionList';

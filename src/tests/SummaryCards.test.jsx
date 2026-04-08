@@ -1,3 +1,7 @@
+/**
+ * Testing the big top cards. We feed them some fake data through a mock context 
+ * just to make sure they're formatting the commas and decimals correctly!
+ */
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { FinanceContext } from '../context/FinanceContext';

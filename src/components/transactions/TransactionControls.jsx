@@ -1,6 +1,8 @@
-// 🌟 TransactionControls Component
-// This is a UI component constructed with Tailwind and Framer Motion.
-// It ensures our interface stays crisp, responsive, and neatly organized.
+/**
+ * This holds all the search bars, filters, and export buttons above the transactions list.
+ * We lift the actual filter values up to the global `FinanceContext` so that when you search
+ * for a transaction here, it properly cascades down and filters the data everywhere!
+ */
 import React from 'react';
 import { useFinance } from '../../context/FinanceContext';
 import { Search, ArrowUpDown, Download } from 'lucide-react';

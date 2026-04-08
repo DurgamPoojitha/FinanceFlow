@@ -1,6 +1,8 @@
-// 🌟 Header Component
-// This is a UI component constructed with Tailwind and Framer Motion.
-// It ensures our interface stays crisp, responsive, and neatly organized.
+/**
+ * The top bar of our app!
+ * It gives users a quick way to toggle dark mode, sync their data,
+ * and switch between 'Admin' and 'Viewer' roles to see how the UI changes.
+ */
 import React from 'react';
 import { useFinance } from '../../context/FinanceContext';
 import { Shield, ShieldAlert, RotateCcw, Sun, Moon } from 'lucide-react';

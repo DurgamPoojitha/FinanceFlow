@@ -1,6 +1,8 @@
-// 🌟 SummaryCards Component
-// This is a UI component constructed with Tailwind and Framer Motion.
-// It ensures our interface stays crisp, responsive, and neatly organized.
+/**
+ * Those three big cards at the top of the dashboard. 
+ * They just pull the total balance, income, and expenses straight from our 
+ * global `FinanceContext`. Super simple, but they look great!
+ */
 import React from 'react';
 import { useFinance } from '../../context/FinanceContext';
 import { TrendingUp, TrendingDown, Wallet } from 'lucide-react';

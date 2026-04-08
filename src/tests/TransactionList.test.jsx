@@ -1,3 +1,7 @@
+/**
+ * This tests the big list of transactions. We make sure it shows the empty state 
+ * when there's no data, and we double-check that 'Viewers' can't see the edit buttons!
+ */
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { TransactionList } from '../components/transactions/TransactionList';

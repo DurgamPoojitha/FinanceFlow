@@ -1,3 +1,7 @@
+/**
+ * Testing the right-side widgets. We clear out local storage first so we always
+ * start entirely fresh, and then we pretend to add a new credit card!
+ */
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { WidgetsPanel } from '../components/dashboard/WidgetsPanel';

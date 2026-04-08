@@ -1,3 +1,7 @@
+/**
+ * Tests for our Add/Edit popup! We check if it knows when to say "New" vs "Edit"
+ *, and we even simulate a user typing in a dollar amount and clicking Save.
+ */
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { TransactionForm } from '../components/transactions/TransactionForm';

@@ -1,6 +1,8 @@
-// 🌟 TransactionList Component
-// This is a UI component constructed with Tailwind and Framer Motion.
-// It ensures our interface stays crisp, responsive, and neatly organized.
+/**
+ * The big table that shows all your past transactions.
+ * We group everything by month so it's not just one overwhelmingly giant list.
+ * Plus, we only show the edit/delete buttons if you're currently in 'Admin' mode!
+ */
 import React, { useMemo } from 'react';
 import { useFinance } from '../../context/FinanceContext';
 import { Edit2, Trash2, ArrowUpRight, ArrowDownRight, SearchX } from 'lucide-react';

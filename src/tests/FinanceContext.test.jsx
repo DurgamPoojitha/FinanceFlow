@@ -1,3 +1,7 @@
+/**
+ * A quick test just to make sure our global state brain (the FinanceContext)
+ * boots up correctly and starts us off as a 'Viewer'. 
+ */
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { FinanceProvider, useFinance } from '../context/FinanceContext';

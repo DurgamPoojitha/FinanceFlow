@@ -1,6 +1,7 @@
-// 🌟 SpendingBreakdownChart Component
-// This is a UI component constructed with Tailwind and Framer Motion.
-// It ensures our interface stays crisp, responsive, and neatly organized.
+/**
+ * The pie chart that shows where all your money is actually going.
+ * It grabs your expenses from the global context and slices them up by category.
+ */
 import React, { useMemo } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 import { useFinance } from '../../context/FinanceContext';

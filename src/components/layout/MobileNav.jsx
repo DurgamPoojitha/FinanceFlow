@@ -1,6 +1,8 @@
-// 🌟 MobileNav Component
-// This is a UI component constructed with Tailwind and Framer Motion.
-// It ensures our interface stays crisp, responsive, and neatly organized.
+/**
+ * The bottom navigation menu that only shows up on small screens.
+ * Makes it super easy to tap between the Dashboard and Transactions 
+ * when you're using your phone with one hand!
+ */
 import React from 'react';
 import { LayoutDashboard, Receipt } from 'lucide-react';
 import { motion } from 'framer-motion';

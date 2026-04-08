@@ -1,6 +1,9 @@
-// 🌟 WidgetsPanel Component
-// This is a UI component constructed with Tailwind and Framer Motion.
-// It ensures our interface stays crisp, responsive, and neatly organized.
+/**
+ * The sidebar panel on the right side of the dashboard.
+ * It holds your connected cards and your savings goals. 
+ * This file is a bit bigger because it manages its own local state 
+ * for the "Add Card" and "Add Goal" forms and their popup modals!
+ */
 import React, { useState, useEffect } from 'react';
 import { Plus, ChevronRight, Monitor, Laptop, CreditCard, X, Target, Trash2, Edit2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';

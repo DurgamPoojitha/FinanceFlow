@@ -1,3 +1,8 @@
+/**
+ * The main Dashboard view!
+ * This is where we pull all our smaller widgets (cards, charts, insights)
+ * together into one beautiful grid layout.
+ */
 import React, { useState } from 'react';
 import { SummaryCards } from '../components/dashboard/SummaryCards';
 import { BalanceTrendChart } from '../components/dashboard/BalanceTrendChart';

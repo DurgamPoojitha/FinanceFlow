@@ -1,6 +1,8 @@
-// 🌟 DateFilter Component
-// This is a UI component constructed with Tailwind and Framer Motion.
-// It ensures our interface stays crisp, responsive, and neatly organized.
+/**
+ * A handy little dropdown to filter your transactions by date.
+ * Tying it directly into the FinanceContext means the moment you pick
+ * a new date range, the chart and the numbers update instantly everywhere!
+ */
 import React from 'react';
 import { useFinance } from '../../context/FinanceContext';
 import { Calendar } from 'lucide-react';

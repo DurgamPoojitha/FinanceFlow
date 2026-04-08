@@ -1,6 +1,8 @@
-// 🌟 BalanceTrendChart Component
-// This is a UI component constructed with Tailwind and Framer Motion.
-// It ensures our interface stays crisp, responsive, and neatly organized.
+/**
+ * The main line chart showing your balance over time.
+ * We're using Recharts because it plays really nicely with React and gives us 
+ * smooth, scalable graphics that look sharp on any screen size.
+ */
 import React, { useMemo, useState } from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { useFinance } from '../../context/FinanceContext';
@@ -10,11 +12,20 @@ export const BalanceTrendChart = () => {
     const { transactions, theme } = useFinance();
     const [activeTab, setActiveTab] = useState('Income');
 
+    /**
+     * Okay, this part handles the heavy lifting. We take a huge list of single transactions
+     * and crunch them down into daily totals so the chart can easily plot them.
+     * 
+     * We wrapped it in `useMemo` so we only rebuild this chart data when the transactions 
+     * *actually* change, rather than every time you click one of the tab buttons (Income/Expense).
+     */
     const data = useMemo(() => {
+        // First we make a copy so we don't accidentally mess up the original data, then sort it by date.
         const sorted = [...transactions].sort((a, b) => new Date(a.date) - new Date(b.date));
         let balance = 0;
         const dataPoints = [];
 
+        // Now we group all those transactions by their specific day.
         const grouped = {};
         sorted.forEach(t => {
             const d = new Date(t.date).toISOString().split('T')[0];

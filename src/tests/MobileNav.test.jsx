@@ -1,3 +1,7 @@
+/**
+ * Testing our bottom phone menu! We simulate some clicks here just to 
+ * guarantee that hitting 'Transactions' actually tells the app to switch pages.
+ */
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { MobileNav } from '../components/layout/MobileNav';
