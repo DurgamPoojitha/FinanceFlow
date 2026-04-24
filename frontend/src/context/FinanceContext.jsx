@@ -18,6 +18,9 @@ export const useFinance = () => useContext(FinanceContext);
 export const FinanceProvider = ({ children }) => {
     // We're setting up our primary state variables here.
     const [transactions, setTransactions] = useState([]);
+    const [kpis, setKpis] = useState([]);
+    const [insights, setInsights] = useState([]);
+    const [trends, setTrends] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
     // Controlling user authorization via this local state.
@@ -34,15 +37,36 @@ export const FinanceProvider = ({ children }) => {
         dateRange: 'This Month'
     });
 
-    // On the first load, grab data asynchronously to simulate a real database fetch.
     useEffect(() => {
         const fetchInitialData = async () => {
             setIsLoading(true);
             try {
-                const data = await mockApi.getTransactions();
-                setTransactions(data);
+                const [txRes, kpisRes, insightsRes, trendsRes] = await Promise.all([
+                    fetch('http://127.0.0.1:8000/api/transactions'),
+                    fetch('http://127.0.0.1:8000/api/kpis?month=2024-04'), // Example month
+                    fetch('http://127.0.0.1:8000/api/insights?month=2024-04'),
+                    fetch('http://127.0.0.1:8000/api/trends')
+                ]);
+
+                const txData = await txRes.json();
+                const kpisData = kpisRes.ok ? await kpisRes.json() : [];
+                const insightsData = insightsRes.ok ? await insightsRes.json() : [];
+                const trendsData = trendsRes.ok ? await trendsRes.json() : [];
+
+                // Keep frontend working with the expected schema temporarily
+                // Backend sends `date` instead of timestamp, `type` is 'income', frontend uses 'Income'
+                const formattedTx = txData.map(t => ({
+                    ...t,
+                    type: t.type === 'income' ? 'Income' : 'Expense',
+                    category: t.category_name,
+                }));
+
+                setTransactions(formattedTx);
+                setKpis(kpisData);
+                setInsights(insightsData);
+                setTrends(trendsData);
             } catch (error) {
-                console.error('Failed to load transactions:', error);
+                console.error('Failed to load data from backend:', error);
             } finally {
                 setIsLoading(false);
             }
@@ -143,10 +167,12 @@ export const FinanceProvider = ({ children }) => {
     const totalExpense = dateFilteredTransactions.filter(t => t.type === 'Expense').reduce((sum, t) => sum + Number(t.amount), 0);
     const totalBalance = totalIncome - totalExpense;
 
-    // Bundle everything up nicely into a payload
     const value = {
         transactions: dateFilteredTransactions,
         allTransactions: transactions,
+        kpis,
+        insights,
+        trends,
         isLoading,
         role,
         setRole,
