@@ -1,0 +1,501 @@
+transaction_date,amount,description,category_name
+2026-02-10,3187.45,Tech Corp Salary,Salary
+2026-01-26,-469.51,Coffee Shop,Food
+2026-02-14,-123.4,Electric Bill,Utilities
+2026-04-04,-452.68,Monthly Rent,Rent
+2025-10-26,3455.43,Tech Corp Salary,Salary
+2026-03-09,2191.06,Tech Corp Salary,Salary
+2026-01-05,1057.23,Consulting,Freelance
+2026-01-15,-382.39,Uber,Transport
+2025-11-27,3315.35,Client Invoice,Freelance
+2026-01-19,3412.62,Tech Corp Salary,
+2026-03-10,3378.47,Consulting,Freelance
+2025-10-29,3099.83,Client Invoice,Freelance
+2026-04-14,815.18,Tech Corp Salary,Salary
+2025-12-03,-202.19,Restaurant,Food
+2026-01-11,-303.22,Water Bill,Utilities
+2026-02-05,-398.69,Internet,Utilities
+2026-03-14,-403.49,Movie Tickets,Entertainment
+2026-04-17,-206.43,Train Ticket,Transport
+2026-04-04,-121.71,Restaurant,Food
+2025-10-27,-63.88,Game Subscription,Entertainment
+2025-12-10,-329.95,Gas Station,Transport
+2026-01-13,-264.64,Uber,Transport
+2026-01-10,1925.52,Tech Corp Salary,Salary
+2025-11-17,-188.14,Water Bill,Utilities
+2025-12-18,-423.72,Electric Bill,Utilities
+2025-12-29,1759.72,Tech Corp Salary,
+2025-11-06,2715.76,Client Invoice,Freelance
+2026-04-10,-285.88,Uber,Transport
+2025-12-16,-438.38,Electric Bill,Utilities
+2025-12-30,-204.36,Train Ticket,Transport
+2026-02-06,-417.23,Internet,Utilities
+2026-03-04,-129.78,Groceries,Food
+2025-11-04,-231.89,Monthly Rent,Rent
+2026-03-03,-240.71,Uber,Transport
+2026-03-21,-206.77,Gas Station,Transport
+2026-01-04,-263.83,Game Subscription,Entertainment
+2025-11-18,-38.75,Game Subscription,Entertainment
+2026-01-28,-448.27,Gas Station,Transport
+2026-01-19,-301.99,Restaurant,Food
+2026-03-14,-142.5,Monthly Rent,Rent
+2026-03-28,3664.3,Consulting,Freelance
+2026-03-14,-59.51,Monthly Rent,Rent
+2026-04-02,3155.43,Client Invoice,Freelance
+2026-01-04,2369.56,Consulting,Freelance
+2026-04-17,-260.48,Water Bill,Utilities
+2026-02-05,-345.09,Gas Station,Transport
+2026-01-28,1284.42,Consulting,Freelance
+2025-12-01,-79.44,Coffee Shop,Food
+2025-12-18,987.35,Client Invoice,Freelance
+2026-02-20,1571.05,Consulting,Freelance
+2025-12-10,-404.05,Monthly Rent,Rent
+2026-02-05,-161.92,Coffee Shop,Food
+2025-10-27,1435.19,Client Invoice,
+2026-02-07,1448.91,Consulting,Freelance
+2025-12-26,-375.21,Monthly Rent,Rent
+2026-01-19,-420.46,Uber,Transport
+2026-01-09,-219.76,Concert,Entertainment
+2025-11-24,-281.23,Internet,Utilities
+2026-01-24,-52.84,Water Bill,Utilities
+2025-12-18,2099.26,Client Invoice,Freelance
+2026-02-06,-157.45,Water Bill,
+2026-01-12,-41.94,Monthly Rent,Rent
+2026-02-11,-83.71,Electric Bill,Utilities
+2026-03-24,4056.22,Client Invoice,Freelance
+2025-10-31,-172.71,Movie Tickets,Entertainment
+2025-11-20,2678.34,Client Invoice,Freelance
+2026-03-17,-297.31,Gas Station,Transport
+2025-11-25,-308.58,Monthly Rent,Rent
+2026-03-13,3097.09,Tech Corp Salary,Salary
+2025-11-18,-192.79,Train Ticket,Transport
+2025-12-22,-226.65,Uber,Transport
+2026-01-21,-299.99,Gas Station,Transport
+2026-03-27,2601.45,Tech Corp Salary,Salary
+2025-11-23,-98.86,Monthly Rent,Rent
+2026-03-21,-463.08,Electric Bill,Utilities
+2026-01-04,-23.81,Water Bill,Utilities
+2026-04-15,2819.35,Client Invoice,Freelance
+2026-02-01,-11.43,Monthly Rent,Rent
+2025-11-18,1649.82,Consulting,Freelance
+2026-04-10,4501.51,Client Invoice,Freelance
+2026-03-20,-175.13,Gas Station,
+2026-01-22,1950.18,Tech Corp Salary,Salary
+2026-02-13,-107.75,Gas Station,Transport
+2025-12-29,-13.03,Uber,Transport
+2026-02-09,-448.16,Restaurant,Food
+2026-04-09,2689.03,Tech Corp Salary,Salary
+2026-01-19,2659.15,Client Invoice,Freelance
+2026-03-25,-18.68,Coffee Shop,Food
+2025-11-01,-181.33,Water Bill,Utilities
+2025-11-23,2398.61,Tech Corp Salary,Salary
+2025-12-21,-374.87,Monthly Rent,Rent
+2026-03-09,-488.26,Monthly Rent,Rent
+2025-12-26,-428.89,Electric Bill,
+2025-11-03,-447.47,Restaurant,Food
+2026-02-23,1731.5,Tech Corp Salary,Salary
+2026-02-05,-282.37,Monthly Rent,Rent
+2026-04-23,-274.76,Monthly Rent,Rent
+2026-03-14,2385.34,Tech Corp Salary,Salary
+2025-12-04,-307.48,Concert,Entertainment
+2026-04-09,-379.88,Game Subscription,Entertainment
+2025-11-23,-326.23,Water Bill,Utilities
+2026-01-08,-96.21,Movie Tickets,Entertainment
+2026-03-06,871.15,Tech Corp Salary,Salary
+2026-01-09,-165.51,Game Subscription,Entertainment
+2026-03-08,2733.26,Tech Corp Salary,
+2025-12-10,2554.51,Tech Corp Salary,Salary
+2026-04-11,4335.52,Tech Corp Salary,Salary
+2026-03-02,1895.6,Consulting,
+2025-11-25,-282.25,Water Bill,Utilities
+2026-02-23,1761.92,Tech Corp Salary,Salary
+2026-04-07,4959.74,Consulting,Freelance
+2026-03-16,3050.13,Consulting,
+2025-12-09,984.5,Tech Corp Salary,Salary
+2026-03-13,-483.72,Internet,Utilities
+2025-12-13,-79.94,Movie Tickets,Entertainment
+2026-02-03,-192.08,Groceries,Food
+2026-03-23,-349.1,Groceries,Food
+2026-03-09,3640.39,Client Invoice,Freelance
+2026-01-07,3882.0,Consulting,Freelance
+2026-01-29,2107.15,Tech Corp Salary,Salary
+2026-04-01,4821.4,Client Invoice,Freelance
+2026-01-28,3988.57,Client Invoice,Freelance
+2025-12-19,-14.33,Uber,Transport
+2026-01-25,2507.76,Consulting,Freelance
+2026-03-29,-223.71,Internet,Utilities
+2026-01-08,-291.95,Monthly Rent,Rent
+2026-01-15,-428.31,Monthly Rent,Rent
+2025-10-26,-438.24,Train Ticket,Transport
+2025-12-14,-451.2,Game Subscription,Entertainment
+2026-01-27,1884.17,Tech Corp Salary,Salary
+2025-11-25,4508.54,Consulting,Freelance
+2025-10-28,821.99,Tech Corp Salary,Salary
+2026-02-14,2470.78,Consulting,Freelance
+2025-12-19,-485.13,Internet,Utilities
+2025-11-22,964.14,Client Invoice,Freelance
+2025-12-17,1786.41,Client Invoice,Freelance
+2026-04-03,-44.57,Monthly Rent,Rent
+2025-10-28,-188.95,Groceries,Food
+2026-02-28,4213.62,Client Invoice,Freelance
+2025-12-07,3935.5,Consulting,Freelance
+2026-01-07,-232.36,Movie Tickets,Entertainment
+2025-11-01,-291.45,Electric Bill,Utilities
+2026-04-18,-304.36,Water Bill,Utilities
+2026-04-24,-473.78,Internet,Utilities
+2026-03-18,-314.16,Groceries,Food
+2026-03-30,-385.87,Internet,Utilities
+2025-12-05,-170.46,Water Bill,Utilities
+2025-12-10,-95.08,Movie Tickets,Entertainment
+2026-03-15,3348.74,Client Invoice,Freelance
+2026-01-11,992.04,Consulting,Freelance
+2025-12-13,-49.37,Electric Bill,Utilities
+2026-02-07,1013.43,Client Invoice,
+2026-03-10,-491.96,Monthly Rent,Rent
+2026-04-16,2174.89,Client Invoice,Freelance
+2026-03-01,-179.74,Movie Tickets,Entertainment
+2026-02-21,801.88,Client Invoice,Freelance
+2025-10-29,-13.67,Coffee Shop,Food
+2026-04-07,-377.42,Movie Tickets,Entertainment
+2025-10-30,-441.36,Internet,Utilities
+2025-11-05,-463.44,Internet,Utilities
+2026-03-02,1499.35,Tech Corp Salary,Salary
+2026-01-12,-37.48,Gas Station,Transport
+2026-02-11,1352.04,Tech Corp Salary,Salary
+2026-01-09,-499.12,Restaurant,Food
+2026-02-22,-13.21,Groceries,Food
+2026-03-14,-65.3,Coffee Shop,Food
+2026-01-05,-78.53,Electric Bill,Utilities
+2025-12-10,-370.92,Coffee Shop,Food
+2026-03-26,-262.87,Train Ticket,Transport
+2025-11-27,4875.24,Client Invoice,Freelance
+2026-03-02,3995.16,Tech Corp Salary,Salary
+2026-04-15,-387.32,Game Subscription,Entertainment
+2025-12-08,-383.78,Monthly Rent,Rent
+2026-03-21,3445.45,Consulting,Freelance
+2026-01-12,-170.06,Monthly Rent,
+2026-03-20,1203.38,Tech Corp Salary,Salary
+2026-04-08,-468.38,Movie Tickets,Entertainment
+2026-03-19,2768.24,Tech Corp Salary,Salary
+2026-02-04,-23.85,Monthly Rent,Rent
+2025-11-13,-140.48,Gas Station,Transport
+2026-04-19,4831.87,Client Invoice,Freelance
+2025-12-06,3007.37,Tech Corp Salary,Salary
+2025-12-13,-209.26,Game Subscription,Entertainment
+2026-03-13,-24.02,Game Subscription,Entertainment
+2025-11-14,-200.01,Monthly Rent,Rent
+2026-04-01,2611.19,Consulting,Freelance
+2026-02-15,-103.48,Monthly Rent,Rent
+2025-12-29,-178.77,Monthly Rent,Rent
+2025-11-19,-244.36,Internet,Utilities
+2025-11-03,-326.16,Game Subscription,Entertainment
+2025-11-10,-353.25,Gas Station,Transport
+2026-03-28,-492.34,Monthly Rent,Rent
+2026-03-31,-62.26,Uber,Transport
+2026-04-16,-487.42,Internet,Utilities
+2025-12-10,-387.87,Monthly Rent,Rent
+2026-03-28,-395.83,Internet,Utilities
+2026-02-26,-373.47,Game Subscription,Entertainment
+2026-03-24,-64.56,Game Subscription,Entertainment
+2026-01-05,-477.9,Concert,Entertainment
+2026-03-26,-166.82,Gas Station,Transport
+2026-01-16,-258.59,Game Subscription,Entertainment
+2026-02-06,-395.66,Train Ticket,Transport
+2026-01-07,-392.01,Groceries,Food
+2026-04-04,-411.87,Restaurant,Food
+2025-12-08,-25.44,Game Subscription,Entertainment
+2025-12-23,-498.32,Internet,Utilities
+2025-12-30,-465.26,Monthly Rent,Rent
+2026-02-04,1476.79,Tech Corp Salary,Salary
+2026-03-21,4950.94,Consulting,
+2025-11-23,-89.13,Groceries,
+2025-11-15,-346.0,Internet,Utilities
+2026-01-25,-437.83,Concert,Entertainment
+2025-11-16,-221.22,Concert,Entertainment
+2025-12-25,-497.29,Groceries,Food
+2025-11-27,-160.25,Monthly Rent,Rent
+2026-03-08,1690.15,Consulting,Freelance
+2025-12-06,-437.09,Monthly Rent,Rent
+2026-04-09,1084.01,Consulting,Freelance
+2025-10-27,-312.3,Electric Bill,Utilities
+2025-12-26,-366.83,Monthly Rent,Rent
+2026-02-03,-131.92,Electric Bill,Utilities
+2026-04-22,4514.0,Consulting,Freelance
+2026-03-28,-291.03,Restaurant,Food
+2026-03-09,-396.96,Movie Tickets,Entertainment
+2026-04-24,-241.88,Concert,Entertainment
+2026-03-31,-121.28,Gas Station,Transport
+2025-11-11,-280.0,Movie Tickets,Entertainment
+2026-02-20,-129.49,Restaurant,Food
+2026-01-25,-247.08,Uber,Transport
+2026-01-19,-278.88,Water Bill,Utilities
+2026-03-03,-319.98,Monthly Rent,Rent
+2026-01-06,1854.14,Tech Corp Salary,Salary
+2026-03-12,4154.25,Consulting,Freelance
+2025-11-12,1875.65,Tech Corp Salary,Salary
+2026-04-16,-213.63,Uber,Transport
+2026-04-08,-422.9,Gas Station,Transport
+2025-12-29,-447.12,Concert,Entertainment
+2025-12-30,-295.8,Monthly Rent,Rent
+2026-03-04,-109.22,Coffee Shop,Food
+2025-11-12,-356.02,Gas Station,Transport
+2025-12-19,-219.91,Groceries,Food
+2026-02-14,1881.38,Client Invoice,Freelance
+2026-03-09,905.26,Client Invoice,Freelance
+2026-02-02,-94.22,Internet,Utilities
+2025-12-21,-362.54,Gas Station,Transport
+2025-11-21,-251.06,Electric Bill,Utilities
+2026-04-16,4223.26,Consulting,Freelance
+2026-01-31,-208.94,Game Subscription,Entertainment
+2025-11-01,-148.7,Groceries,Food
+2026-03-04,-129.09,Gas Station,Transport
+2026-02-24,-59.5,Movie Tickets,Entertainment
+2026-04-11,-232.38,Groceries,Food
+2026-02-11,-406.29,Electric Bill,Utilities
+2026-03-29,569.54,Tech Corp Salary,Salary
+2026-02-13,-442.8,Monthly Rent,Rent
+2025-11-11,-68.84,Train Ticket,Transport
+2025-12-16,3360.76,Tech Corp Salary,Salary
+2026-03-06,590.26,Client Invoice,Freelance
+2026-03-10,4821.06,Tech Corp Salary,Salary
+2026-01-16,-256.26,Game Subscription,Entertainment
+2025-12-04,-96.31,Water Bill,Utilities
+2025-11-20,-357.14,Monthly Rent,Rent
+2026-01-03,-451.03,Monthly Rent,Rent
+2026-04-04,4874.45,Tech Corp Salary,Salary
+2026-03-26,-427.58,Monthly Rent,Rent
+2026-01-05,-473.53,Electric Bill,Utilities
+2026-01-29,-264.0,Groceries,Food
+2026-01-27,-388.61,Electric Bill,Utilities
+2026-02-04,4237.92,Tech Corp Salary,
+2025-11-12,-211.88,Water Bill,
+2025-12-30,-223.96,Monthly Rent,Rent
+2026-01-01,2885.41,Consulting,Freelance
+2025-11-12,-196.05,Gas Station,Transport
+2026-03-16,-83.59,Movie Tickets,Entertainment
+2026-01-09,-461.86,Gas Station,Transport
+2026-01-11,-320.8,Movie Tickets,Entertainment
+2026-02-07,-14.07,Coffee Shop,Food
+2026-01-27,4812.64,Tech Corp Salary,Salary
+2026-01-02,-81.1,Restaurant,Food
+2026-02-26,-392.21,Monthly Rent,Rent
+2026-02-09,-378.27,Monthly Rent,Rent
+2025-12-16,-354.78,Concert,Entertainment
+2025-11-26,-168.85,Coffee Shop,Food
+2026-03-19,-416.24,Train Ticket,Transport
+2026-03-29,2985.25,Consulting,Freelance
+2026-03-29,3917.04,Tech Corp Salary,
+2026-01-14,-412.76,Monthly Rent,Rent
+2025-11-19,-494.6,Electric Bill,Utilities
+2026-01-26,-255.64,Game Subscription,Entertainment
+2025-12-13,-145.02,Coffee Shop,Food
+2026-01-10,-84.15,Water Bill,Utilities
+2026-03-12,-406.02,Concert,Entertainment
+2026-01-14,2098.35,Consulting,Freelance
+2025-12-21,3660.19,Client Invoice,Freelance
+2025-11-17,-472.95,Water Bill,Utilities
+2025-12-10,-443.21,Monthly Rent,Rent
+2026-02-24,710.23,Client Invoice,Freelance
+2026-02-03,-171.37,Game Subscription,Entertainment
+2025-11-19,-27.13,Movie Tickets,Entertainment
+2026-03-07,-408.91,Game Subscription,Entertainment
+2025-12-08,2907.12,Tech Corp Salary,Salary
+2026-02-24,2528.78,Tech Corp Salary,Salary
+2026-03-31,-302.15,Coffee Shop,Food
+2025-12-31,-423.35,Restaurant,
+2026-02-14,-28.49,Restaurant,Food
+2026-03-23,-45.43,Game Subscription,Entertainment
+2025-12-04,-218.78,Uber,Transport
+2025-11-25,1580.9,Consulting,Freelance
+2026-03-07,-268.36,Internet,Utilities
+2026-03-19,-397.16,Groceries,Food
+2025-12-22,-340.92,Monthly Rent,Rent
+2026-02-07,-403.47,Gas Station,
+2026-01-08,-434.86,Internet,Utilities
+2026-03-16,-497.44,Gas Station,Transport
+2025-11-07,-419.37,Concert,Entertainment
+2025-12-14,-465.97,Game Subscription,Entertainment
+2026-04-04,-63.28,Electric Bill,Utilities
+2026-02-13,-72.36,Gas Station,Transport
+2026-01-09,3795.96,Tech Corp Salary,Salary
+2025-10-30,-261.67,Monthly Rent,Rent
+2025-11-20,-275.54,Gas Station,Transport
+2026-01-30,-25.07,Movie Tickets,Entertainment
+2025-11-03,4668.41,Consulting,Freelance
+2026-01-11,-499.53,Internet,Utilities
+2025-12-31,-35.76,Water Bill,Utilities
+2026-03-27,-387.31,Restaurant,Food
+2025-11-20,-384.29,Coffee Shop,Food
+2026-01-07,1041.13,Client Invoice,Freelance
+2026-02-25,-145.43,Electric Bill,Utilities
+2025-12-25,-190.39,Game Subscription,Entertainment
+2026-02-17,4059.21,Consulting,Freelance
+2026-03-12,4980.13,Client Invoice,Freelance
+2025-12-22,-232.38,Game Subscription,Entertainment
+2026-02-16,-184.57,Restaurant,Food
+2026-01-20,4959.71,Consulting,Freelance
+2026-03-28,955.42,Client Invoice,Freelance
+2025-11-18,-311.18,Monthly Rent,Rent
+2026-01-04,2052.38,Tech Corp Salary,Salary
+2026-04-15,-97.49,Monthly Rent,Rent
+2026-04-12,-247.01,Concert,Entertainment
+2025-12-02,3801.31,Consulting,Freelance
+2026-02-21,-145.49,Train Ticket,Transport
+2025-12-31,-475.33,Monthly Rent,Rent
+2026-01-20,-56.62,Monthly Rent,Rent
+2026-01-18,1241.19,Client Invoice,Freelance
+2026-04-21,-214.92,Game Subscription,Entertainment
+2026-04-08,-222.1,Game Subscription,Entertainment
+2026-02-19,-67.56,Concert,Entertainment
+2026-02-11,3664.09,Client Invoice,
+2026-03-30,-145.1,Train Ticket,Transport
+2026-03-17,-336.67,Gas Station,Transport
+2026-01-01,-304.44,Uber,Transport
+2026-03-26,-72.32,Uber,Transport
+2026-04-14,-469.17,Groceries,Food
+2026-01-31,1107.81,Tech Corp Salary,Salary
+2026-01-27,1406.05,Client Invoice,Freelance
+2026-02-09,-470.58,Water Bill,Utilities
+2026-03-03,-139.97,Monthly Rent,
+2025-12-07,-208.78,Concert,Entertainment
+2026-03-30,-405.76,Train Ticket,Transport
+2026-03-20,-171.13,Internet,Utilities
+2026-03-29,-98.82,Monthly Rent,Rent
+2025-12-03,2887.53,Tech Corp Salary,Salary
+2026-01-09,-177.04,Uber,Transport
+2026-03-02,2802.98,Consulting,Freelance
+2025-11-18,4450.81,Tech Corp Salary,Salary
+2026-03-18,-65.41,Restaurant,Food
+2026-02-19,-303.06,Water Bill,Utilities
+2026-02-28,-495.35,Gas Station,Transport
+2025-11-19,-13.8,Internet,Utilities
+2025-10-26,626.28,Consulting,Freelance
+2025-12-26,-495.14,Game Subscription,Entertainment
+2025-12-04,-402.87,Movie Tickets,Entertainment
+2025-11-03,-206.53,Monthly Rent,Rent
+2026-03-13,-193.43,Monthly Rent,
+2026-04-07,1103.43,Tech Corp Salary,Salary
+2025-12-31,1957.7,Tech Corp Salary,Salary
+2025-12-21,-392.87,Uber,Transport
+2026-02-07,-100.43,Monthly Rent,Rent
+2026-02-21,-450.77,Uber,Transport
+2026-02-21,-314.63,Restaurant,Food
+2026-02-11,3618.02,Client Invoice,Freelance
+2026-04-07,-55.6,Monthly Rent,Rent
+2026-02-20,4996.64,Consulting,Freelance
+2025-11-02,-133.47,Electric Bill,Utilities
+2026-01-24,-51.35,Restaurant,Food
+2025-10-26,-333.88,Internet,Utilities
+2025-11-30,-481.49,Restaurant,Food
+2026-03-24,-256.16,Concert,Entertainment
+2026-01-22,2334.33,Consulting,Freelance
+2025-11-09,-276.45,Concert,Entertainment
+2025-12-01,4174.01,Tech Corp Salary,Salary
+2026-04-15,1302.5,Client Invoice,Freelance
+2026-01-21,-348.04,Movie Tickets,Entertainment
+2026-02-21,-168.01,Restaurant,Food
+2025-12-07,-446.7,Monthly Rent,Rent
+2025-12-12,-138.87,Internet,Utilities
+2026-02-16,-246.85,Monthly Rent,Rent
+2026-02-16,1735.8,Tech Corp Salary,Salary
+2026-03-13,-134.54,Monthly Rent,Rent
+2026-04-11,1987.33,Tech Corp Salary,Salary
+2026-04-06,586.86,Tech Corp Salary,Salary
+2026-03-13,-237.57,Uber,Transport
+2026-03-23,-303.33,Monthly Rent,Rent
+2026-01-09,539.45,Tech Corp Salary,Salary
+2025-12-15,2190.42,Tech Corp Salary,Salary
+2026-02-11,3397.8,Tech Corp Salary,Salary
+2025-11-09,-380.24,Internet,Utilities
+2026-04-09,-203.01,Train Ticket,Transport
+2025-11-10,-215.9,Monthly Rent,Rent
+2026-03-31,-234.53,Restaurant,Food
+2026-03-14,-286.41,Electric Bill,Utilities
+2025-10-28,-230.17,Monthly Rent,Rent
+2026-04-04,-64.53,Uber,Transport
+2025-12-06,2496.06,Tech Corp Salary,Salary
+2026-02-24,-39.4,Gas Station,Transport
+2026-03-05,-209.66,Train Ticket,Transport
+2025-11-15,-234.39,Internet,Utilities
+2026-01-24,-89.6,Movie Tickets,Entertainment
+2026-01-20,2139.96,Client Invoice,Freelance
+2026-02-13,-252.19,Movie Tickets,Entertainment
+2026-02-27,-417.8,Train Ticket,Transport
+2025-11-26,-135.1,Monthly Rent,Rent
+2026-01-01,4695.86,Tech Corp Salary,Salary
+2026-04-11,-249.76,Monthly Rent,Rent
+2026-02-24,-219.92,Water Bill,Utilities
+2026-02-05,-258.71,Train Ticket,Transport
+2025-11-15,-465.19,Game Subscription,Entertainment
+2025-11-18,-103.84,Groceries,Food
+2026-02-20,-84.02,Monthly Rent,Rent
+2025-11-23,-444.7,Train Ticket,Transport
+2025-12-07,-263.62,Internet,Utilities
+2026-01-12,2431.75,Client Invoice,Freelance
+2026-01-08,-78.1,Water Bill,Utilities
+2026-01-19,4181.22,Tech Corp Salary,Salary
+2026-01-28,-420.05,Movie Tickets,Entertainment
+2025-12-11,-69.78,Monthly Rent,Rent
+2026-02-23,-389.35,Electric Bill,Utilities
+2025-12-21,-471.11,Game Subscription,Entertainment
+2026-01-20,-274.92,Monthly Rent,Rent
+2025-11-12,-251.75,Groceries,Food
+2025-12-06,-221.32,Coffee Shop,Food
+2026-04-02,3334.32,Consulting,Freelance
+2026-01-22,-135.55,Coffee Shop,Food
+2026-02-02,-117.97,Train Ticket,Transport
+2026-04-14,-46.28,Monthly Rent,Rent
+2026-02-18,-369.88,Concert,Entertainment
+2026-02-24,-133.19,Monthly Rent,Rent
+2026-03-07,-217.48,Monthly Rent,Rent
+2026-02-02,-244.71,Uber,Transport
+2026-04-23,-468.41,Coffee Shop,Food
+2026-03-18,703.44,Tech Corp Salary,Salary
+2025-10-28,-348.85,Gas Station,Transport
+2025-11-13,-21.5,Movie Tickets,Entertainment
+2026-03-04,-50.0,Movie Tickets,Entertainment
+2026-02-16,-433.55,Game Subscription,Entertainment
+2026-04-01,-242.88,Electric Bill,Utilities
+2026-03-09,-485.64,Uber,Transport
+2025-12-30,1593.43,Client Invoice,Freelance
+2026-01-29,-236.0,Game Subscription,Entertainment
+2025-11-13,3849.91,Tech Corp Salary,Salary
+2025-11-02,2728.54,Consulting,Freelance
+2025-12-17,2538.94,Consulting,Freelance
+2026-01-17,2203.91,Tech Corp Salary,Salary
+2026-02-08,-325.88,Uber,Transport
+2026-03-25,-419.27,Movie Tickets,Entertainment
+2026-04-23,-410.76,Uber,Transport
+2025-11-27,3374.59,Client Invoice,
+2025-12-05,3553.13,Consulting,Freelance
+2026-03-06,-258.29,Electric Bill,Utilities
+2026-01-06,-94.06,Water Bill,Utilities
+2026-01-22,1239.69,Consulting,Freelance
+2025-12-11,-481.19,Gas Station,Transport
+2025-12-29,-125.97,Monthly Rent,Rent
+2025-12-04,-103.83,Monthly Rent,
+2025-11-01,-215.98,Internet,Utilities
+2026-01-20,-20.47,Monthly Rent,Rent
+2026-03-28,-52.02,Groceries,
+2025-12-01,-180.48,Train Ticket,Transport
+2026-02-02,-42.48,Uber,Transport
+2026-03-14,-484.52,Concert,Entertainment
+2026-03-23,-314.58,Gas Station,Transport
+2026-04-22,-345.71,Movie Tickets,Entertainment
+2025-12-14,-75.99,Monthly Rent,Rent
+2026-04-16,-268.9,Groceries,Food
+2026-04-10,-381.06,Uber,Transport
+2026-01-02,-341.97,Gas Station,Transport
+2026-04-19,606.01,Consulting,
+2026-03-07,2593.11,Tech Corp Salary,Salary
+2026-02-02,-316.04,Electric Bill,Utilities
+2026-03-09,-300.31,Gas Station,Transport
+2025-12-06,-370.6,Internet,Utilities
+2026-01-24,-152.4,Electric Bill,Utilities
+2026-01-09,-340.92,Movie Tickets,Entertainment
+2026-01-21,4552.13,Tech Corp Salary,Salary
+2025-11-27,4025.7,Tech Corp Salary,
+2026-02-11,-219.72,Groceries,Food
+2026-02-03,-290.47,Gas Station,Transport
+2026-02-04,-134.41,Game Subscription,Entertainment
+2025-10-31,-405.55,Gas Station,Transport
