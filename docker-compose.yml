@@ -1,0 +1,85 @@
+version: '3.9'
+
+# ============================================================
+# FinanceFlow BI Platform – Docker Compose
+#
+# Services:
+#   api      – FastAPI backend (SQLite dev / PostgreSQL prod)
+#   db       – PostgreSQL 15 for production use
+#
+# Usage:
+#   Development (SQLite):
+#     docker-compose up api
+#
+#   Production (PostgreSQL):
+#     docker-compose --profile production up
+# ============================================================
+
+services:
+
+  # ----------------------------------------------------------
+  # API Service – FastAPI Backend
+  # ----------------------------------------------------------
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+    container_name: financeflow-api
+    ports:
+      - "8000:8000"
+    environment:
+      # Override DATABASE_URL to use the postgres service in production
+      DATABASE_URL: ${DATABASE_URL:-sqlite:///./database/finance.db}
+      SECRET_KEY: ${SECRET_KEY:-dev-secret-key-change-in-production}
+      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:5173}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@financeflow.com}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-admin123}
+      ENVIRONMENT: ${ENVIRONMENT:-development}
+      DEFAULT_BUDGET: ${DEFAULT_BUDGET:-3000.0}
+    volumes:
+      # Mount database directory so SQLite file persists across container restarts
+      - ./database:/app/database
+      - ./etl/data:/app/etl/data
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    profiles:
+      - default
+      - production
+
+  # ----------------------------------------------------------
+  # Database Service – PostgreSQL 15
+  # Used when ENVIRONMENT=production or DATABASE_URL points to postgres
+  # ----------------------------------------------------------
+  db:
+    image: postgres:15-alpine
+    container_name: financeflow-db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-financeflow_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-strongpassword}
+      POSTGRES_DB: ${POSTGRES_DB:-financeflow_db}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-financeflow_user} -d ${POSTGRES_DB:-financeflow_db}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    profiles:
+      - production
+
+volumes:
+  postgres_data:
+    driver: local

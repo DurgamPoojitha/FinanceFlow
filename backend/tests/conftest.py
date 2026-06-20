@@ -1,100 +1,154 @@
-import pytest
-from fastapi.testclient import TestClient
-import sqlite3
-import sys
 import os
+import sys
+import tempfile
+import pytest
 
-# Add the parent directory to sys.path so we can import from backend modules
-sys.path.insert(0, os.path.abspath(os.path.dirname(os.path.dirname(__file__))))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
+from fastapi.testclient import TestClient
+from sqlalchemy import create_engine, event
+from sqlalchemy.orm import sessionmaker
+
+from orm_models import Base
+import main as _main_module  # Import before patching
 
 from main import app
 from database import get_db
+from orm_models import (
+    AggregatedMetrics, Budget, Category,
+    CategoryAggregation, Insight, Transaction, User,
+)
+from auth import hash_password
 
-@pytest.fixture(name="db_connection")
-def fixture_db_connection():
-    conn = sqlite3.connect(":memory:", check_same_thread=False)
-    conn.row_factory = sqlite3.Row
-    
-    # Create necessary tables
-    cursor = conn.cursor()
-    cursor.executescript('''
-        CREATE TABLE categories (
-            id INTEGER PRIMARY KEY,
-            name TEXT,
-            type TEXT
-        );
-        CREATE TABLE transactions (
-            id INTEGER PRIMARY KEY,
-            date TEXT,
-            amount REAL,
-            description TEXT,
-            category_id INTEGER,
-            FOREIGN KEY (category_id) REFERENCES categories (id)
-        );
-        CREATE TABLE aggregated_metrics (
-            month TEXT PRIMARY KEY,
-            total_income REAL,
-            total_expenses REAL,
-            savings REAL,
-            savings_rate REAL
-        );
-        CREATE TABLE category_aggregations (
-            id INTEGER PRIMARY KEY,
-            month TEXT,
-            category_id INTEGER,
-            total_amount REAL,
-            FOREIGN KEY (category_id) REFERENCES categories (id)
-        );
-        CREATE TABLE insights (
-            id INTEGER PRIMARY KEY,
-            month TEXT,
-            insight_text TEXT,
-            type TEXT
-        );
-        CREATE TABLE trends (
-            month TEXT PRIMARY KEY,
-            total_expenses REAL,
-            total_income REAL,
-            moving_average_expenses REAL
-        );
-    ''')
-    
-    # Insert mock data
-    cursor.executescript('''
-        INSERT INTO categories (id, name, type) VALUES (1, 'Salary', 'income');
-        INSERT INTO categories (id, name, type) VALUES (2, 'Food', 'expense');
-        
-        INSERT INTO transactions (id, date, amount, description, category_id) 
-        VALUES (1, '2023-10-01', 5000, 'Salary', 1);
-        INSERT INTO transactions (id, date, amount, description, category_id) 
-        VALUES (2, '2023-10-02', 50, 'Groceries', 2);
-        
-        INSERT INTO aggregated_metrics (month, total_income, total_expenses, savings, savings_rate)
-        VALUES ('2023-10', 5000, 2000, 3000, 60.0);
-        
-        INSERT INTO category_aggregations (id, month, category_id, total_amount)
-        VALUES (1, '2023-10', 2, 2000);
-        
-        INSERT INTO insights (id, month, insight_text, type)
-        VALUES (1, '2023-10', 'Great savings!', 'positive');
-        
-        INSERT INTO trends (month, total_expenses, total_income, moving_average_expenses)
-        VALUES ('2023-10', 2000, 5000, 1500);
-    ''')
-    conn.commit()
-    
-    yield conn
-    conn.close()
+
+def _make_test_engine(db_path: str):
+    """Create a fresh file-backed SQLite engine for tests."""
+    eng = create_engine(
+        f"sqlite:///{db_path}",
+        connect_args={"check_same_thread": False},
+    )
+    return eng
+
+
+@pytest.fixture(name="db_session")
+def fixture_db_session(monkeypatch):
+    """
+    Creates an isolated database per test using a temporary file.
+    """
+    fd, db_path = tempfile.mkstemp(suffix=".db")
+    os.close(fd)
+
+    test_engine = _make_test_engine(db_path)
+    TestingLocal = sessionmaker(autocommit=False, autoflush=False, bind=test_engine)
+
+    # 1. Create all tables in the test engine
+    Base.metadata.create_all(bind=test_engine)
+
+    # 2. Suppress lifespan side effects (scheduler, seeding, create_all on prod engine)
+    monkeypatch.setattr(_main_module, "_seed_on_startup", lambda: None)
+    monkeypatch.setattr(_main_module, "_start_scheduler", lambda: None)
+    monkeypatch.setattr(_main_module, "_stop_scheduler", lambda: None)
+    # Patch create_all on the metadata singleton to be a no-op
+    monkeypatch.setattr(Base.metadata, "create_all", lambda **kwargs: None)
+
+    session = TestingLocal()
+
+    # Seed dimensions
+    cat_income = Category(name="Salary", type="income")
+    cat_expense = Category(name="Food", type="expense")
+    session.add_all([cat_income, cat_expense])
+    session.flush()
+
+    # Seed transactions
+    session.add(Transaction(
+        date="2023-10-01", amount=5000.0, description="Tech Corp Salary",
+        category_id=cat_income.id, source_hash="hash_income_1",
+    ))
+    session.add(Transaction(
+        date="2023-10-15", amount=-50.0, description="Groceries",
+        category_id=cat_expense.id, source_hash="hash_expense_1",
+    ))
+    session.flush()
+
+    # Seed aggregates
+    session.add(AggregatedMetrics(
+        month="2023-10",
+        total_income=5000.0,
+        total_expenses=2000.0,
+        savings=3000.0,
+        savings_rate=60.0,
+    ))
+    session.add(CategoryAggregation(
+        month="2023-10", category_id=cat_expense.id, total_amount=2000.0,
+    ))
+    session.add(Insight(
+        month="2023-10", insight_text="Great savings!", type="positive",
+    ))
+
+    # Seed budgets
+    session.add(Budget(month="2023-10", amount=3000.0))
+    session.add(Budget(month="default", amount=3000.0))
+
+    # Seed users
+    session.add(User(
+        email="admin@test.com",
+        hashed_password=hash_password("password123"),
+        role="admin",
+    ))
+    session.add(User(
+        email="viewer@test.com",
+        hashed_password=hash_password("password123"),
+        role="viewer",
+    ))
+
+    session.commit()
+    yield session
+
+    session.close()
+    test_engine.dispose()
+    if os.path.exists(db_path):
+        os.remove(db_path)
+
 
 @pytest.fixture(name="client")
-def fixture_client(db_connection):
+def fixture_client(db_session):
+    """TestClient with get_db overridden to use the per-test session."""
     def override_get_db():
         try:
-            yield db_connection
+            yield db_session
         finally:
             pass
-            
+
     app.dependency_overrides[get_db] = override_get_db
-    with TestClient(app) as client:
-        yield client
+    with TestClient(app, raise_server_exceptions=True) as c:
+        yield c
     app.dependency_overrides.clear()
+
+
+@pytest.fixture(name="admin_token")
+def fixture_admin_token(client):
+    """Valid JWT token for the seeded admin user."""
+    resp = client.post("/api/auth/login", json={
+        "email": "admin@test.com",
+        "password": "password123",
+    })
+    assert resp.status_code == 200, f"Admin login failed: {resp.text}"
+    return resp.json()["access_token"]
+
+
+@pytest.fixture(name="viewer_token")
+def fixture_viewer_token(client):
+    """Valid JWT token for the seeded viewer user."""
+    resp = client.post("/api/auth/login", json={
+        "email": "viewer@test.com",
+        "password": "password123",
+    })
+    assert resp.status_code == 200, f"Viewer login failed: {resp.text}"
+    return resp.json()["access_token"]
+
+
+@pytest.fixture(name="admin_client")
+def fixture_admin_client(client, admin_token):
+    """TestClient with admin Authorization header pre-set."""
+    client.headers.update({"Authorization": f"Bearer {admin_token}"})
+    return client

@@ -1,73 +1,88 @@
-import sqlite3
+"""
+Database Initialization Script.
+
+Creates all tables using SQLAlchemy ORM (replaces raw SQL in the original version).
+Seeds a default admin user and default budget on first run.
+
+Run directly:
+    python database/init_db.py
+
+Or import and call init_db() from within the application.
+"""
+
+import logging
 import os
+import sys
 
-DB_PATH = os.path.join(os.path.dirname(__file__), 'finance.db')
+# Allow running directly from the database/ directory
+_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+_BACKEND = os.path.join(_ROOT, "backend")
+for _path in (_ROOT, _BACKEND):
+    if _path not in sys.path:
+        sys.path.insert(0, _path)
 
-def init_db():
-    print(f"Initializing database at {DB_PATH}")
-    conn = sqlite3.connect(DB_PATH)
-    cursor = conn.cursor()
+from database import engine, SessionLocal
+from orm_models import Base, Budget, User
+from auth import hash_password
+from config import get_settings
 
-    # Create Categories table
-    cursor.execute('''
-    CREATE TABLE IF NOT EXISTS categories (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT UNIQUE NOT NULL,
-        type TEXT NOT NULL -- 'expense' or 'income'
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+settings = get_settings()
+
+
+def init_db() -> None:
+    """Create all tables and seed essential reference data."""
+    logger.info("Initializing database at: %s", settings.database_url)
+
+    # Create all tables (safe – skips existing ones)
+    Base.metadata.create_all(bind=engine)
+    logger.info("All tables created (or already exist).")
+
+    db = SessionLocal()
+    try:
+        _seed_default_admin(db)
+        _seed_default_budget(db)
+        db.commit()
+        logger.info("Database initialization complete.")
+    except Exception as exc:
+        db.rollback()
+        logger.error("Initialization failed: %s", exc)
+        raise
+    finally:
+        db.close()
+
+
+def _seed_default_admin(db) -> None:
+    """Create the default admin user if one does not already exist."""
+    from orm_models import User  # local import to avoid circular deps in tests
+    existing = db.query(User).filter(User.role == "admin").first()
+    if existing:
+        logger.info("Admin user already exists (%s). Skipping seed.", existing.email)
+        return
+
+    admin = User(
+        email=settings.admin_email,
+        hashed_password=hash_password(settings.admin_password),
+        role="admin",
     )
-    ''')
+    db.add(admin)
+    logger.info("Created default admin user: %s", settings.admin_email)
 
-    # Create Transactions table
-    cursor.execute('''
-    CREATE TABLE IF NOT EXISTS transactions (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        date TEXT NOT NULL,
-        amount REAL NOT NULL,
-        description TEXT,
-        category_id INTEGER,
-        FOREIGN KEY(category_id) REFERENCES categories(id)
-    )
-    ''')
 
-    # Create Aggregated Metrics table for KPIs
-    cursor.execute('''
-    CREATE TABLE IF NOT EXISTS aggregated_metrics (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        month TEXT NOT NULL, -- Format: YYYY-MM
-        total_income REAL DEFAULT 0,
-        total_expenses REAL DEFAULT 0,
-        savings REAL DEFAULT 0,
-        savings_rate REAL DEFAULT 0,
-        UNIQUE(month)
-    )
-    ''')
+def _seed_default_budget(db) -> None:
+    """Create a default fallback budget if one does not exist."""
+    from orm_models import Budget
+    existing = db.query(Budget).filter(Budget.month == "default").first()
+    if existing:
+        logger.info("Default budget already exists ($%.2f). Skipping seed.", existing.amount)
+        return
 
-    # Create Category Aggregations for easy category percentage computation
-    cursor.execute('''
-    CREATE TABLE IF NOT EXISTS category_aggregations (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        month TEXT NOT NULL,
-        category_id INTEGER,
-        total_amount REAL DEFAULT 0,
-        FOREIGN KEY(category_id) REFERENCES categories(id),
-        UNIQUE(month, category_id)
-    )
-    ''')
+    default_budget = Budget(month="default", amount=settings.default_budget)
+    db.add(default_budget)
+    logger.info("Created default budget: $%.2f", settings.default_budget)
 
-    # Create Insights table
-    cursor.execute('''
-    CREATE TABLE IF NOT EXISTS insights (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        month TEXT NOT NULL,
-        insight_text TEXT NOT NULL,
-        type TEXT NOT NULL, -- 'positive', 'warning', 'neutral'
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    )
-    ''')
-
-    conn.commit()
-    conn.close()
-    print("Database initialization complete.")
 
 if __name__ == "__main__":
     init_db()

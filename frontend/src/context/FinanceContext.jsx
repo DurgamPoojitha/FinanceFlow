@@ -1,195 +1,304 @@
-import React, { createContext, useState, useEffect, useContext, useMemo } from 'react';
-import { mockApi } from '../api/mockApi';
-
 /**
- * This Context is basically our global brain for the app.
- * Instead of adding something heavy like Redux, we just use React Context
- * to easily share our transactions, theme, and filters across any component that needs it.
+ * FinanceContext – Global State Provider.
+ *
+ * Changes from original:
+ *   - All hardcoded URLs removed → uses apiClient (reads VITE_API_BASE_URL)
+ *   - Hardcoded month=2024-04 removed → dynamic selectedMonth (current YYYY-MM)
+ *   - availableMonths fetched from GET /api/months
+ *   - KPIs and insights refetch when selectedMonth changes
+ *   - addTransaction / updateTransaction / deleteTransaction now call REAL backend
+ *     (POST/PUT/DELETE /api/transactions) instead of mockApi / localStorage
+ *   - Role is set from the JWT login response (not a hardcoded useState default)
+ *   - mockApi import removed entirely
  */
+
+import React, { createContext, useState, useEffect, useContext, useMemo, useCallback } from 'react';
+import { apiClient, clearToken, getToken } from '../api/apiClient';
+
 export const FinanceContext = createContext();
 
-/**
- * A tiny custom hook so we don't have to keep importing `useContext`
- * and `FinanceContext` every single time we want to show a balance.
- * We just call `useFinance()` and boom, we have all our data!
- */
+/** Custom hook for easy context consumption. */
 export const useFinance = () => useContext(FinanceContext);
 
-export const FinanceProvider = ({ children }) => {
-    // We're setting up our primary state variables here.
+/** Returns the current month in YYYY-MM format (e.g. "2026-06"). */
+const getCurrentMonth = () => {
+    const now = new Date();
+    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+};
+
+export const FinanceProvider = ({ children, initialUser }) => {
+    // -----------------------------------------------------------------------
+    // Core data state
+    // -----------------------------------------------------------------------
     const [transactions, setTransactions] = useState([]);
     const [kpis, setKpis] = useState([]);
     const [insights, setInsights] = useState([]);
     const [trends, setTrends] = useState([]);
+    const [availableMonths, setAvailableMonths] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    // Controlling user authorization via this local state.
-    const [role, setRole] = useState('Viewer'); // Viewer | Admin
+    // -----------------------------------------------------------------------
+    // UI / UX state
+    // -----------------------------------------------------------------------
+    const [role, setRole] = useState(initialUser?.role || 'viewer');
+    const [userEmail, setUserEmail] = useState(initialUser?.email || '');
 
-    // Theme preference logic - we check if there's a saved theme in the browser first.
+    // Theme: persist in localStorage, apply as 'dark' class on <html>
     const [theme, setTheme] = useState(() => localStorage.getItem('finance_theme') || 'dark');
 
-    // An object tracking what filters are currently active on our transactions list.
+    // Month selector – KPIs and insights update when this changes
+    const [selectedMonth, setSelectedMonth] = useState(getCurrentMonth);
+
+    // Transaction list filters (separate from selectedMonth)
     const [filters, setFilters] = useState({
         search: '',
         type: 'All',
         category: 'All',
-        dateRange: 'This Month'
+        dateRange: 'This Month',
     });
 
+    // -----------------------------------------------------------------------
+    // Theme effect
+    // -----------------------------------------------------------------------
     useEffect(() => {
-        const fetchInitialData = async () => {
+        localStorage.setItem('finance_theme', theme);
+        document.documentElement.classList.toggle('dark', theme === 'dark');
+    }, [theme]);
+
+    const toggleTheme = () => setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+
+    // -----------------------------------------------------------------------
+    // Initial data load (transactions, trends, available months)
+    // These are fetched once on mount and don't depend on selectedMonth.
+    // -----------------------------------------------------------------------
+    useEffect(() => {
+        const fetchStaticData = async () => {
             setIsLoading(true);
+            setError(null);
             try {
-                const [txRes, kpisRes, insightsRes, trendsRes] = await Promise.all([
-                    fetch('http://127.0.0.1:8000/api/transactions'),
-                    fetch('http://127.0.0.1:8000/api/kpis?month=2024-04'), // Example month
-                    fetch('http://127.0.0.1:8000/api/insights?month=2024-04'),
-                    fetch('http://127.0.0.1:8000/api/trends')
+                const [txData, trendsData, monthsData] = await Promise.all([
+                    apiClient.get('/api/transactions?limit=200'),
+                    apiClient.get('/api/trends'),
+                    apiClient.get('/api/months'),
                 ]);
 
-                const txData = await txRes.json();
-                const kpisData = kpisRes.ok ? await kpisRes.json() : [];
-                const insightsData = insightsRes.ok ? await insightsRes.json() : [];
-                const trendsData = trendsRes.ok ? await trendsRes.json() : [];
-
-                // Keep frontend working with the expected schema temporarily
-                // Backend sends `date` instead of timestamp, `type` is 'income', frontend uses 'Income'
-                const formattedTx = txData.map(t => ({
+                // Normalize type casing: backend sends 'income'/'expense', UI expects 'Income'/'Expense'
+                const formattedTx = txData.map((t) => ({
                     ...t,
                     type: t.type === 'income' ? 'Income' : 'Expense',
                     category: t.category_name,
                 }));
 
                 setTransactions(formattedTx);
-                setKpis(kpisData);
-                setInsights(insightsData);
                 setTrends(trendsData);
-            } catch (error) {
-                console.error('Failed to load data from backend:', error);
+                setAvailableMonths(monthsData);
+
+                // Default selectedMonth: current month if available, else most recent
+                const current = getCurrentMonth();
+                if (monthsData.includes(current)) {
+                    setSelectedMonth(current);
+                } else if (monthsData.length > 0) {
+                    setSelectedMonth(monthsData[0]); // most recent
+                }
+            } catch (err) {
+                console.error('Failed to load initial data:', err);
+                setError(err.message);
             } finally {
                 setIsLoading(false);
             }
         };
-        fetchInitialData();
+
+        fetchStaticData();
     }, []);
 
-    /**
-     * Whenever the user toggles dark mode, we don't just save it to local storage.
-     * We actually slap a 'dark' class right onto the root HTML element.
-     * This makes Tailwind immediately flip all its colors across the entire app,
-     * so the transition feels instant.
-     */
+    // -----------------------------------------------------------------------
+    // Month-dependent data (KPIs and insights refetch when selectedMonth changes)
+    // -----------------------------------------------------------------------
     useEffect(() => {
-        localStorage.setItem('finance_theme', theme);
-        if (theme === 'dark') {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-        }
-    }, [theme]);
+        if (!selectedMonth) return;
 
-    const toggleTheme = () => setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+        const fetchMonthData = async () => {
+            try {
+                const [kpisData, insightsData] = await Promise.all([
+                    apiClient.get(`/api/kpis?month=${selectedMonth}`).catch(() => []),
+                    apiClient.get(`/api/insights?month=${selectedMonth}`).catch(() => []),
+                ]);
+                setKpis(Array.isArray(kpisData) ? kpisData : []);
+                setInsights(Array.isArray(insightsData) ? insightsData : []);
+            } catch (err) {
+                console.error('Failed to load month data:', err);
+            }
+        };
 
-    // CRUD functions for our transactions. These talk to our mock API 
-    // and seamlessly update our local React state immediately on success!
-    const addTransaction = async (transaction) => {
+        fetchMonthData();
+    }, [selectedMonth]);
+
+    // -----------------------------------------------------------------------
+    // Real CRUD – connected to FastAPI backend (not mockApi / localStorage)
+    // -----------------------------------------------------------------------
+
+    const addTransaction = useCallback(async (formData) => {
         try {
-            const newTx = await mockApi.addTransaction(transaction);
-            setTransactions(prev => [newTx, ...prev]);
-        } catch (e) {
-            console.error(e);
-        }
-    };
+            const payload = {
+                date: formData.date,
+                amount: Math.abs(parseFloat(formData.amount)),
+                type: formData.type,       // 'Income' | 'Expense'
+                category: formData.category,
+                description: formData.description || '',
+            };
+            const newTx = await apiClient.post('/api/transactions', payload);
 
-    const updateTransaction = async (id, updatedData) => {
+            // Normalize and prepend to local state immediately
+            const normalized = {
+                ...newTx,
+                type: newTx.type === 'income' ? 'Income' : 'Expense',
+                category: newTx.category_name,
+            };
+            setTransactions((prev) => [normalized, ...prev]);
+            return normalized;
+        } catch (err) {
+            console.error('addTransaction failed:', err);
+            throw err;
+        }
+    }, []);
+
+    const updateTransaction = useCallback(async (id, formData) => {
         try {
-            await mockApi.updateTransaction(id, updatedData);
-            setTransactions(prev => prev.map(t => t.id === id ? { ...t, ...updatedData } : t));
-        } catch (e) {
-            console.error(e);
+            const payload = {
+                date: formData.date,
+                amount: Math.abs(parseFloat(formData.amount)),
+                type: formData.type,
+                category: formData.category,
+                description: formData.description || '',
+            };
+            const updated = await apiClient.put(`/api/transactions/${id}`, payload);
+            const normalized = {
+                ...updated,
+                type: updated.type === 'income' ? 'Income' : 'Expense',
+                category: updated.category_name,
+            };
+            setTransactions((prev) =>
+                prev.map((t) => (t.id === id ? normalized : t))
+            );
+            return normalized;
+        } catch (err) {
+            console.error('updateTransaction failed:', err);
+            throw err;
         }
-    };
+    }, []);
 
-    const deleteTransaction = async (id) => {
+    const deleteTransaction = useCallback(async (id) => {
         try {
-            await mockApi.deleteTransaction(id);
-            setTransactions(prev => prev.filter(t => t.id !== id));
-        } catch (e) {
-            console.error(e);
+            await apiClient.delete(`/api/transactions/${id}`);
+            setTransactions((prev) => prev.filter((t) => t.id !== id));
+        } catch (err) {
+            console.error('deleteTransaction failed:', err);
+            throw err;
         }
-    };
+    }, []);
 
-    // Sometimes we just need to start clean—this simulates a hard sync with standard mock data.
-    const handleResetData = async () => {
-        setIsLoading(true);
-        const data = await mockApi.resetData();
-        setTransactions(data);
-        setIsLoading(false);
-    };
+    const logout = useCallback(() => {
+        clearToken();
+        // Reload to trigger the auth gate in App.jsx
+        window.location.reload();
+    }, []);
 
-    /**
-     * This is a cool optimization trick. Filtering transactions by dates (this month, last 7 days)
-     * requires some heavy date math. By wrapping it in `useMemo`, we tell React:
-     * "Hey, only recalculate this list IF the transactions change or the filter changes."
-     * If someone just clicks a theme toggle, we don't need to rebuild this list. Saves a lot of lag!
-     */
+    // -----------------------------------------------------------------------
+    // Derived / memoized values
+    // -----------------------------------------------------------------------
+
     const dateFilteredTransactions = useMemo(() => {
-        return transactions.filter(t => {
+        return transactions.filter((t) => {
             if (!filters.dateRange || filters.dateRange === 'All Time') return true;
 
             const txDate = new Date(t.date);
             const now = new Date();
-            // Normalizing times to midnight (00:00) so calendar delta comparisons strictly execute on calendar days.
             txDate.setHours(0, 0, 0, 0);
 
             if (filters.dateRange === 'Last 7 days') {
-                const sevenDaysAgo = new Date();
-                sevenDaysAgo.setDate(now.getDate() - 7);
-                sevenDaysAgo.setHours(0, 0, 0, 0);
-                return txDate >= sevenDaysAgo && txDate <= now;
+                const cutoff = new Date();
+                cutoff.setDate(now.getDate() - 7);
+                cutoff.setHours(0, 0, 0, 0);
+                return txDate >= cutoff && txDate <= now;
             }
             if (filters.dateRange === 'Last 30 days') {
-                const thirtyDaysAgo = new Date();
-                thirtyDaysAgo.setDate(now.getDate() - 30);
-                thirtyDaysAgo.setHours(0, 0, 0, 0);
-                return txDate >= thirtyDaysAgo && txDate <= now;
+                const cutoff = new Date();
+                cutoff.setDate(now.getDate() - 30);
+                cutoff.setHours(0, 0, 0, 0);
+                return txDate >= cutoff && txDate <= now;
             }
             if (filters.dateRange === 'This Month') {
-                return txDate.getMonth() === now.getMonth() && txDate.getFullYear() === now.getFullYear();
+                return (
+                    txDate.getMonth() === now.getMonth() &&
+                    txDate.getFullYear() === now.getFullYear()
+                );
             }
             return true;
         });
     }, [transactions, filters.dateRange]);
 
-    // Compute our quick high-level ledger totals.
-    const totalIncome = dateFilteredTransactions.filter(t => t.type === 'Income').reduce((sum, t) => sum + Number(t.amount), 0);
-    const totalExpense = dateFilteredTransactions.filter(t => t.type === 'Expense').reduce((sum, t) => sum + Number(t.amount), 0);
+    const totalIncome = useMemo(
+        () =>
+            dateFilteredTransactions
+                .filter((t) => t.type === 'Income')
+                .reduce((sum, t) => sum + Number(t.amount), 0),
+        [dateFilteredTransactions]
+    );
+
+    const totalExpense = useMemo(
+        () =>
+            dateFilteredTransactions
+                .filter((t) => t.type === 'Expense')
+                .reduce((sum, t) => sum + Math.abs(Number(t.amount)), 0),
+        [dateFilteredTransactions]
+    );
+
     const totalBalance = totalIncome - totalExpense;
 
+    // -----------------------------------------------------------------------
+    // Context value
+    // -----------------------------------------------------------------------
     const value = {
+        // Data
         transactions: dateFilteredTransactions,
         allTransactions: transactions,
         kpis,
         insights,
         trends,
+        availableMonths,
         isLoading,
+        error,
+
+        // Month selection
+        selectedMonth,
+        setSelectedMonth,
+
+        // Auth
         role,
         setRole,
+        userEmail,
+        logout,
+
+        // Theme
         theme,
         toggleTheme,
+
+        // Filters (transaction list)
         filters,
         setFilters,
+
+        // CRUD (real backend)
         addTransaction,
         updateTransaction,
         deleteTransaction,
-        handleResetData,
+
+        // Derived totals
         totalIncome,
         totalExpense,
         totalBalance,
     };
 
-    // Wrapping our entire application tree in the Provider so any child can dip in
     return (
         <FinanceContext.Provider value={value}>
             {children}

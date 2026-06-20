@@ -9,6 +9,7 @@ import { BalanceTrendChart } from '../components/dashboard/BalanceTrendChart';
 import { SpendingBreakdownChart } from '../components/dashboard/SpendingBreakdownChart';
 import { InsightsSection } from '../components/dashboard/InsightsSection';
 import { DateFilter } from '../components/dashboard/DateFilter';
+import { MonthSelector } from '../components/dashboard/MonthSelector';
 import { WidgetsPanel } from '../components/dashboard/WidgetsPanel';
 import { TransactionForm } from '../components/transactions/TransactionForm';
 import { useFinance } from '../context/FinanceContext';
@@ -33,7 +34,8 @@ export const DashboardPage = () => {
                     <h2 className="text-[28px] font-bold text-slate-900 dark:text-white tracking-tight transition-colors duration-300">Dashboard Overview</h2>
                     <p className="text-slate-500 dark:text-slate-400 mt-1.5 text-[15px] transition-colors duration-300">Here's your financial summary at a glance.</p>
                 </div>
-                <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                    <MonthSelector />
                     <DateFilter />
                     <AnimatePresence>
                         {role === 'Admin' && (
